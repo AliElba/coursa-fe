@@ -34,7 +34,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "elbashop",
+      "prefix": "course",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",

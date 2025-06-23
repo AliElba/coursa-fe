@@ -1,0 +1,301 @@
+@use '@angular/material' as mat;
+
+// Global styles
+:host {
+  display: block;
+  font-family: 'Inter', 'Noto Sans', sans-serif;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+// Header styles
+.app-header {
+  border-bottom: 1px solid #e7edf4;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  color: #3d98f4;
+  width: 24px;
+  height: 24px;
+}
+
+.logo-text {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0d141c;
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+
+  .login-btn {
+    white-space: nowrap;
+    min-width: 100px;
+  }
+}
+
+// Hero section
+.hero-section {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%),
+    url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80');
+  background-size: cover;
+  background-position: center;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero-title {
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Section styles
+.section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2.5rem 4rem;
+}
+
+.section-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #0d141c;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+}
+
+// Horizontal scroll container for cards
+.horizontal-scroll-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: auto;
+  padding: 1rem 1rem 1.5rem; // Extra bottom padding for scrollbar
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+
+  // Custom scrollbar for WebKit browsers (Chrome, Safari, etc.)
+  &::-webkit-scrollbar {
+    height: 6px;
+    background-color: #f1f5f9;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #94a3b8;
+    }
+  }
+
+  // For Firefox
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+// Card list for horizontal scrolling
+.card-list {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem;
+  min-width: min-content;
+}
+
+// Card grid for responsive grid layout
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+// Base card styles
+.content-card {
+  flex: 0 0 300px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Card image
+.card-image {
+  height: 0;
+  padding-bottom: 56.25%; // 16:9 aspect ratio
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+// Card content
+::ng-deep .mat-mdc-card-content {
+  padding: 1.25rem !important;
+}
+
+// Card typography
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0d141c;
+  margin: 0 0 0.5rem 0;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+// CTA Section
+.cta-section {
+  background-color: white;
+  padding: 5rem 1rem;
+  text-align: center;
+}
+
+.cta-content {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.cta-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d141c;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+// Buttons
+button[mat-flat-button] {
+  border-radius: 0.75rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.015em;
+  padding: 0.5rem 1.5rem;
+  height: auto;
+  min-height: 40px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  &.cta-button {
+    width: 100%;
+    max-width: 300px;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    min-height: 48px;
+  }
+}
+
+// Responsive styles
+@media (max-width: 1024px) {
+  .header-content {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 400px;
+    padding: 2rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.875rem;
+  }
+
+  .section {
+    padding: 2rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0.5rem 0;
+  }
+
+  .header-content {
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .cta-title {
+    font-size: 1.5rem;
+  }
+}
