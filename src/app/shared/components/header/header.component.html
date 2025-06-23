@@ -1,11 +1,28 @@
 <header class="app-header">
   <div class="header-content">
-    <a routerLink="/" class="logo-container">
+    <div class="logo-container">
       <mat-icon class="logo-icon">dashboard</mat-icon>
       <h2 class="logo-text">Coursa</h2>
-    </a>
-    <div class="auth-buttons" *ngIf="showLoginButton">
-      <a mat-flat-button color="primary" class="login-btn" routerLink="/login">Log In</a>
+    </div>
+    <div class="auth-buttons" *ngIf="!user && showLoginButton">
+      <button mat-flat-button color="primary" class="login-btn" routerLink="/login">Log In</button>
+    </div>
+    <div *ngIf="user" class="user-avatar-menu">
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <img [src]="user.picture" [alt]="user.name" class="avatar-img" />
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item disabled>
+          <div class="menu-user-info">
+            <img [src]="user.picture" [alt]="user.name" class="avatar-img-menu" />
+            <span class="menu-user-name">{{ user.name }}</span>
+          </div>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>Profile</button>
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item (click)="logout.emit()">Logout</button>
+      </mat-menu>
     </div>
   </div>
 </header>

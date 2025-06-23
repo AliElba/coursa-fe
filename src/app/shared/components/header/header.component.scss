@@ -55,6 +55,50 @@
   }
 }
 
+.user-avatar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e7edf4;
+  display: block;
+  background: #fff;
+
+  // to make the avatar position in the center of the button
+  position: relative;
+  top: -10px;
+  left: -10px;
+}
+
+.avatar-img-menu {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e7edf4;
+  background: #fff;
+}
+
+.menu-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 180px;
+  padding: 0.25rem 0;
+}
+
+.menu-user-name {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #222;
+  white-space: nowrap;
+}
+
 @media (max-width: 1024px) {
   .header-content {
     padding: 0.75rem 1rem;

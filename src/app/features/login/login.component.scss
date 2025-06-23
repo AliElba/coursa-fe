@@ -78,8 +78,22 @@
   }
 }
 
+.google-login-divider {
+  text-align: center;
+  color: #b0b0b0;
+  margin: 1.5rem 0 1rem 0;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.google-login-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 @media (max-width: 480px) {
   .login-card {
     padding: 1.5rem 0.5rem 1rem 0.5rem;
   }
-} 
+}

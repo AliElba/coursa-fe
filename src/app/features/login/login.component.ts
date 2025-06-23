@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,6 +6,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
+import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
+
+declare const google: any;
 
 @Component({
   selector: 'app-login',
@@ -14,15 +19,50 @@ import { HeaderComponent } from '../../shared/components/header/header.component
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   loginForm: FormGroup;
   hidePassword = true;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+
+  ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId) && (window as any).google) {
+      (window as any).google.accounts.id.initialize({
+        client_id: environment.googleClientId,
+        callback: this.handleCredentialResponse.bind(this),
+      });
+      (window as any).google.accounts.id.renderButton(
+        document.getElementById('g_id_signin'),
+        { theme: 'outline', size: 'large', width: 320 }
+      );
+    }
+  }
+
+  handleCredentialResponse(response: any) {
+    // Decode JWT to get user info
+    const userInfo = this.decodeJwt(response.credential);
+    // Store user info in localStorage
+    localStorage.setItem('user', JSON.stringify(userInfo));
+    // Navigate to landing page
+    this.router.navigate(['/']);
+  }
+
+  decodeJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
   }
 
   onSubmit() {

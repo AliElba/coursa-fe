@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
+import { isPlatformBrowser } from '@angular/common';
 
 interface Course {
   title: string;
@@ -26,6 +27,16 @@ interface Exam {
   styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
+  user: any = null;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        this.user = JSON.parse(userStr);
+      }
+    }
+  }
+
   featuredCourses: Course[] = [
     {
       title: 'Introduction to Machine Learning',
@@ -111,4 +122,11 @@ export class LandingComponent {
         'https://images.unsplash.com/photo-1518779570999-870a3c6e8a95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     },
   ];
+
+  onLogout() {
+    localStorage.removeItem('user');
+    this.user = null;
+    // Optionally, navigate to login or reload
+    // location.reload();
+  }
 }
