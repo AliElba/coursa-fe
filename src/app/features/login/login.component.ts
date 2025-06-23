@@ -42,7 +42,13 @@ export class LoginComponent implements AfterViewInit {
       });
       (window as any).google.accounts.id.renderButton(
         document.getElementById('g_id_signin'),
-        { theme: 'outline', size: 'large', width: 320 }
+        {
+            theme: 'filled_blue',
+            size: 'large',
+            shape: 'pill',
+            width: 400,
+            logo_alignment: 'left'
+          }
       );
     }
   }

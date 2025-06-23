@@ -78,12 +78,23 @@
   }
 }
 
-.google-login-divider {
+.google-signin-divider {
+  display: flex;
+  align-items: center;
   text-align: center;
   color: #b0b0b0;
   margin: 1.5rem 0 1rem 0;
   font-size: 0.95rem;
-  position: relative;
+  width: 100%;
+  font-weight: 500;
+}
+
+.google-signin-divider::before,
+.google-signin-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1.5px solid #e0e0e0;
+  margin: 0 1rem;
 }
 
 .google-login-btn {
