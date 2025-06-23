@@ -1,0 +1,11 @@
+<header class="app-header">
+  <div class="header-content">
+    <a routerLink="/" class="logo-container">
+      <mat-icon class="logo-icon">dashboard</mat-icon>
+      <h2 class="logo-text">Coursa</h2>
+    </a>
+    <div class="auth-buttons" *ngIf="showLoginButton">
+      <a mat-flat-button color="primary" class="login-btn" routerLink="/login">Log In</a>
+    </div>
+  </div>
+</header>

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { HeaderComponent } from '../../shared/components/header/header.component';
 
 interface Course {
   title: string;
@@ -20,7 +21,7 @@ interface Exam {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatIconModule, HeaderComponent],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
 })

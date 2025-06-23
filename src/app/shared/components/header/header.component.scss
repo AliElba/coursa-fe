@@ -1,0 +1,74 @@
+.app-header {
+  border-bottom: 1px solid #e7edf4;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.logo-icon {
+  color: #3d98f4;
+  width: 24px;
+  height: 24px;
+}
+
+.logo-text {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0d141c;
+}
+
+.auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+
+  .login-btn {
+    white-space: nowrap;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header-content {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0.5rem 0;
+  }
+  .header-content {
+    padding: 0 1rem;
+  }
+  .logo-text {
+    font-size: 1rem;
+  }
+} 
