@@ -35,21 +35,27 @@ export class LoginComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId) && (window as any).google) {
-      (window as any).google.accounts.id.initialize({
+    if (isPlatformBrowser(this.platformId)) {
+      this.initGoogleButton();
+    }
+  }
+
+  private initGoogleButton(attempt = 0): void {
+    const googleObj = (window as any).google;
+    if (googleObj && googleObj.accounts && googleObj.accounts.id) {
+      googleObj.accounts.id.initialize({
         client_id: environment.googleClientId,
         callback: this.handleCredentialResponse.bind(this),
       });
-      (window as any).google.accounts.id.renderButton(
-        document.getElementById('g_id_signin'),
-        {
-            theme: 'filled_blue',
-            size: 'large',
-            shape: 'pill',
-            width: 400,
-            logo_alignment: 'left'
-          }
-      );
+      googleObj.accounts.id.renderButton(document.getElementById('g_id_signin'), {
+        theme: 'filled_blue',
+        size: 'large',
+        shape: 'pill',
+        width: 400,
+        logo_alignment: 'left',
+      });
+    } else if (attempt < 10) {
+      setTimeout(() => this.initGoogleButton(attempt + 1), 250);
     }
   }
 
