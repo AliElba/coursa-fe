@@ -31,17 +31,18 @@
   }
 }
 
-.logo-icon {
-  color: #3d98f4;
-  width: 24px;
-  height: 24px;
-}
-
 .logo-text {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 700;
   color: #0d141c;
+}
+
+.logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
 }
 
 .auth-buttons {
