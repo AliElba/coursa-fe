@@ -1,16 +1,20 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 
 declare const google: any;
+interface CredentialResponse {
+  credential: string;     // JWT ID token (Base64URL-encoded string)
+  select_by?: string;     // How the user selected the account (e.g., "user", "auto")
+  state?: string;         // Optional: if you provided `state` in button, it's echoed back
+}
 
 @Component({
   selector: 'app-login',
@@ -35,37 +39,58 @@ export class LoginComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.initGoogleButton();
-    }
-  }
-
-  private initGoogleButton(attempt = 0): void {
-    const googleObj = (window as any).google;
-    if (googleObj && googleObj.accounts && googleObj.accounts.id) {
-      googleObj.accounts.id.initialize({
+    if (isPlatformBrowser(this.platformId) && (window as any).google) {
+      (window as any).google.accounts.id.initialize({
         client_id: environment.googleClientId,
         callback: this.handleCredentialResponse.bind(this),
       });
-      googleObj.accounts.id.renderButton(document.getElementById('g_id_signin'), {
-        theme: 'filled_blue',
-        size: 'large',
-        shape: 'pill',
-        width: 400,
-        logo_alignment: 'left',
-      });
-    } else if (attempt < 10) {
-      setTimeout(() => this.initGoogleButton(attempt + 1), 250);
+
+      const buttonElement = document.getElementById('g_id_signin');
+      if (buttonElement) {
+        google.accounts.id.renderButton(buttonElement, {
+          type: 'standard',
+          theme: 'outline',
+          size: 'large',
+          text: 'signin_with',
+          shape: 'pill',
+          width: 400,
+          logo_alignment: 'left'
+        });
+      }
+
+      // Optional: Prompt to select account
+      google.accounts.id.prompt();
     }
   }
 
-  handleCredentialResponse(response: any) {
-    // Decode JWT to get user info
-    const userInfo = this.decodeJwt(response.credential);
-    // Store user info in localStorage
-    localStorage.setItem('user', JSON.stringify(userInfo));
-    // Navigate to landing page
-    this.router.navigate(['/']);
+  handleCredentialResponse(response: CredentialResponse) {
+    try {
+      // The response contains the ID token in the credential property
+      const idToken = response.credential;
+
+      // Verify the token structure (should have 3 parts)
+      if (idToken.split('.').length !== 3) {
+        throw new Error('Invalid ID token format');
+      }
+
+      // Store the raw ID token
+      localStorage.setItem('id_token', idToken);
+
+      // Decode JWT to get user info
+      const userInfo = this.decodeJwt(idToken);
+
+      // Store user info in localStorage
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
+      // Log the decoded token for debugging
+      console.log('Decoded ID token:', userInfo);
+
+      // Navigate to landing page
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Error handling credential response:', error);
+      // Handle error appropriately
+    }
   }
 
   decodeJwt(token: string) {
@@ -83,4 +108,4 @@ export class LoginComponent implements AfterViewInit {
       console.log(this.loginForm.value);
     }
   }
-} 
+}
