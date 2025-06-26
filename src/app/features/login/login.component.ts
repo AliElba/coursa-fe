@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { AuthApi, Configuration, GoogleLoginDto, AuthResponseDto } from '../../generated/api';
+import { ApiConfigService } from '../../core/services/api-config.service';
 
 declare const google: any;
 interface CredentialResponse {
@@ -30,7 +32,8 @@ export class LoginComponent implements AfterViewInit {
   constructor(
     private fb: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,
+    private apiConfig: ApiConfigService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -63,7 +66,7 @@ export class LoginComponent implements AfterViewInit {
     }
   }
 
-  handleCredentialResponse(response: CredentialResponse) {
+  async handleCredentialResponse(response: CredentialResponse) {
     try {
       // The response contains the ID token in the credential property
       const idToken = response.credential;
@@ -73,17 +76,21 @@ export class LoginComponent implements AfterViewInit {
         throw new Error('Invalid ID token format');
       }
 
-      // Store the raw ID token
-      localStorage.setItem('id_token', idToken);
+      // Prepare the DTO for backend validation
+      const googleLoginDto: GoogleLoginDto = { idToken };
 
-      // Decode JWT to get user info
-      const userInfo = this.decodeJwt(idToken);
+      // Initialize the generated AuthApi with the global configuration from ApiConfigService
+      const api = new AuthApi(this.apiConfig.configuration);
 
-      // Store user info in localStorage
-      localStorage.setItem('user', JSON.stringify(userInfo));
+      // Call the backend /auth/google endpoint to validate the token and get user info
+      const { data } = await api.googleLogin(googleLoginDto);
 
-      // Log the decoded token for debugging
-      console.log('Decoded ID token:', userInfo);
+      // Store the accessToken and user info from backend response
+      localStorage.setItem('access_token', data.accessToken);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Log the backend response for debugging
+      console.log('Backend AuthResponse:', data);
 
       // Navigate to landing page
       this.router.navigate(['/']);

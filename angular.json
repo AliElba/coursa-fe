@@ -101,7 +101,8 @@
               "buildTarget": "coursa-fe:build:production"
             },
             "development": {
-              "buildTarget": "coursa-fe:build:development"
+              "buildTarget": "coursa-fe:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
