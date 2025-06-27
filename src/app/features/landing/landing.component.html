@@ -10,31 +10,15 @@
         Explore a curated collection of courses and exams designed to enhance your skills and prepare you for the future.
         Our platform leverages AI to personalize your learning journey and provide insightful feedback.
       </p>
-      <button mat-flat-button color="primary" class="explore-btn">
+      <button mat-flat-button color="primary" class="explore-btn" (click)="scrollToCourses()">
         Explore Courses
       </button>
     </div>
   </section>
 
-  <!-- Featured Courses -->
-  <div class="section">
-    <h2 class="section-title">Featured Courses</h2>
-    <div class="horizontal-scroll-container">
-      <div class="card-list">
-        <mat-card *ngFor="let course of featuredCourses" class="content-card">
-          <div class="card-image" [style.background-image]="'url(' + course.image + ')'"></div>
-          <mat-card-content>
-            <h3 class="card-title">{{ course.title }}</h3>
-            <p class="card-description">{{ course.description }}</p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-
-  <!-- Popular Exams -->
-  <div class="section">
-    <h2 class="section-title">Popular Exams</h2>
+  <!-- Courses (formerly Popular Exams) -->
+  <div class="section" #coursesSection>
+    <h2 class="section-title">Courses</h2>
     <div class="card-grid">
       <mat-card *ngFor="let exam of popularExams" class="content-card">
         <div class="card-image" [style.background-image]="'url(' + exam.image + ')'"></div>

@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,12 +6,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { isPlatformBrowser } from '@angular/common';
-
-interface Course {
-  title: string;
-  description: string;
-  image: string;
-}
 
 interface Exam {
   title: string;
@@ -28,6 +22,10 @@ interface Exam {
 })
 export class LandingComponent {
   user: any = null;
+
+  // Reference to the courses section
+  @ViewChild('coursesSection') coursesSection!: ElementRef<HTMLElement>;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
       const userStr = localStorage.getItem('user');
@@ -36,47 +34,6 @@ export class LandingComponent {
       }
     }
   }
-
-  featuredCourses: Course[] = [
-    {
-      title: 'Introduction to Machine Learning',
-      description: 'Learn the fundamentals of machine learning algorithms and their applications.',
-      image:
-        'https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
-    },
-    {
-      title: 'Advanced Data Analysis',
-      description: 'Master advanced techniques for analyzing and interpreting complex datasets.',
-      image:
-        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    },
-    {
-      title: 'AI Ethics and Society',
-      description: 'Explore the ethical implications of AI and its impact on society.',
-      image:
-        'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    },
-    {
-      title: 'Deep Learning Foundations',
-      description:
-        'Understand the core principles of deep learning and its applications in various fields.',
-      image:
-        'https://images.unsplash.com/photo-1536528087227-8b3f5f9d2ed9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    },
-    {
-      title: 'Natural Language Processing',
-      description:
-        'Discover the techniques and tools used in processing and analyzing human language data.',
-      image:
-        'https://images.unsplash.com/photo-1526378729312-5076c5a09e1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    },
-    {
-      title: 'Computer Vision Applications',
-      description: 'Learn about the cutting-edge technologies and methods used in computer vision.',
-      image:
-        'https://images.unsplash.com/photo-1518779570999-870a3c6e8a95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    },
-  ];
 
   popularExams: Exam[] = [
     {
@@ -128,5 +85,14 @@ export class LandingComponent {
     this.user = null;
     // Optionally, navigate to login or reload
     // location.reload();
+  }
+
+  /**
+   * Scrolls smoothly to the courses section below the hero section using Angular's ViewChild
+   */
+  scrollToCourses() {
+    if (this.coursesSection) {
+      this.coursesSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
