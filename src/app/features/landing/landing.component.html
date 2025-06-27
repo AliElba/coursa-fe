@@ -20,11 +20,19 @@
   <div class="section" #coursesSection>
     <h2 class="section-title">Courses</h2>
     <div class="card-grid">
-      <mat-card *ngFor="let exam of popularExams" class="content-card">
-        <div class="card-image" [style.background-image]="'url(' + exam.image + ')'"></div>
-        <mat-card-content>
-          <h3 class="card-title">{{ exam.title }}</h3>
-          <p class="card-description">{{ exam.description }}</p>
+      <mat-card *ngFor="let course of courses" class="content-card">
+        <div class="card-image" [style.background-image]="'url(' + course.image + ')'" ></div>
+        <mat-card-content class="card-content-flex">
+          <h3 class="card-title">{{ course.title }}</h3>
+          <div class="card-meta">
+            <span class="meta-item">🕒 {{ course.hours }} hours</span>
+            <span class="meta-item">📝 {{ course.numberOfExams }} exams</span>
+          </div>
+          <p class="card-description">{{ course.description }}</p>
+          <div class="price-label">
+            <span class="price">Price: ${{ course.price }}</span>
+          </div>
+          <button mat-stroked-button color="primary" class="register-btn">Register</button>
         </mat-card-content>
       </mat-card>
     </div>

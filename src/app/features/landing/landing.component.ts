@@ -7,10 +7,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { isPlatformBrowser } from '@angular/common';
 
-interface Exam {
+interface Course {
   title: string;
   description: string;
   image: string;
+  hours: number;
+  numberOfExams: number;
+  price: number;
 }
 
 @Component({
@@ -35,13 +38,16 @@ export class LandingComponent {
     }
   }
 
-  popularExams: Exam[] = [
+  courses: Course[] = [
     {
       title: 'AI Certification Exam',
       description:
         'Validate your knowledge and skills in artificial intelligence with our comprehensive certification exam.',
       image:
         'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
+      hours: 40,
+      numberOfExams: 3,
+      price: 199,
     },
     {
       title: 'Data Science Proficiency Test',
@@ -49,6 +55,9 @@ export class LandingComponent {
         'Assess your proficiency in data science with our challenging and insightful test.',
       image:
         'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      hours: 32,
+      numberOfExams: 2,
+      price: 149,
     },
     {
       title: 'Machine Learning Specialist Assessment',
@@ -56,6 +65,9 @@ export class LandingComponent {
         'Demonstrate your expertise in machine learning with our specialized assessment.',
       image:
         'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      hours: 28,
+      numberOfExams: 2,
+      price: 129,
     },
     {
       title: 'Deep Learning Fundamentals Exam',
@@ -63,6 +75,9 @@ export class LandingComponent {
         'Test your knowledge of deep learning principles and techniques with our comprehensive exam.',
       image:
         'https://images.unsplash.com/photo-1536528087227-8b3f5f9d2ed9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      hours: 36,
+      numberOfExams: 3,
+      price: 179,
     },
     {
       title: 'Natural Language Processing Assessment',
@@ -70,6 +85,9 @@ export class LandingComponent {
         'Evaluate your skills in natural language processing with our challenging and insightful assessment.',
       image:
         'https://images.unsplash.com/photo-1526378729312-5076c5a09e1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      hours: 30,
+      numberOfExams: 2,
+      price: 139,
     },
     {
       title: 'Computer Vision Applications Certification Exam',
@@ -77,6 +95,9 @@ export class LandingComponent {
         'Validate your knowledge and skills in computer vision applications with our comprehensive certification exam.',
       image:
         'https://images.unsplash.com/photo-1518779570999-870a3c6e8a95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+      hours: 34,
+      numberOfExams: 2,
+      price: 159,
     },
   ];
 
