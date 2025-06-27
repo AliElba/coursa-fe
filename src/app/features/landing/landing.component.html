@@ -1,6 +1,4 @@
 <div class="app-container">
-  <!-- Header -->
-  <app-header [user]="user" (logout)="onLogout()"></app-header>
 
   <!-- Hero Section -->
   <section class="hero-section">
@@ -32,7 +30,7 @@
           <div class="price-label">
             <span class="price">Price: ${{ course.price }}</span>
           </div>
-          <button mat-stroked-button color="primary" class="register-btn">Register</button>
+          <button mat-stroked-button color="primary" class="register-btn" (click)="registerCourse(course)">Register</button>
         </mat-card-content>
       </mat-card>
     </div>

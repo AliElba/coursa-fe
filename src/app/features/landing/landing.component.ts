@@ -1,13 +1,14 @@
 import { Component, Inject, PLATFORM_ID, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { HeaderComponent } from '../../shared/components/header/header.component';
 import { isPlatformBrowser } from '@angular/common';
+import { Component as NgComponent } from '@angular/core';
 
 interface Course {
+  id: number;
   title: string;
   description: string;
   image: string;
@@ -19,27 +20,18 @@ interface Course {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatIconModule, HeaderComponent],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
-  user: any = null;
-
-  // Reference to the courses section
   @ViewChild('coursesSection') coursesSection!: ElementRef<HTMLElement>;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      const userStr = localStorage.getItem('user');
-      if (userStr) {
-        this.user = JSON.parse(userStr);
-      }
-    }
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {}
 
   courses: Course[] = [
     {
+      id: 1,
       title: 'AI Certification Exam',
       description:
         'Validate your knowledge and skills in artificial intelligence with our comprehensive certification exam.',
@@ -50,6 +42,7 @@ export class LandingComponent {
       price: 199,
     },
     {
+      id: 2,
       title: 'Data Science Proficiency Test',
       description:
         'Assess your proficiency in data science with our challenging and insightful test.',
@@ -60,6 +53,7 @@ export class LandingComponent {
       price: 149,
     },
     {
+      id: 3,
       title: 'Machine Learning Specialist Assessment',
       description:
         'Demonstrate your expertise in machine learning with our specialized assessment.',
@@ -70,6 +64,7 @@ export class LandingComponent {
       price: 129,
     },
     {
+      id: 4,
       title: 'Deep Learning Fundamentals Exam',
       description:
         'Test your knowledge of deep learning principles and techniques with our comprehensive exam.',
@@ -80,6 +75,7 @@ export class LandingComponent {
       price: 179,
     },
     {
+      id: 5,
       title: 'Natural Language Processing Assessment',
       description:
         'Evaluate your skills in natural language processing with our challenging and insightful assessment.',
@@ -90,6 +86,7 @@ export class LandingComponent {
       price: 139,
     },
     {
+      id: 6,
       title: 'Computer Vision Applications Certification Exam',
       description:
         'Validate your knowledge and skills in computer vision applications with our comprehensive certification exam.',
@@ -101,19 +98,23 @@ export class LandingComponent {
     },
   ];
 
-  onLogout() {
-    localStorage.removeItem('user');
-    this.user = null;
-    // Optionally, navigate to login or reload
-    // location.reload();
-  }
-
   /**
    * Scrolls smoothly to the courses section below the hero section using Angular's ViewChild
    */
   scrollToCourses() {
     if (this.coursesSection) {
       this.coursesSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  registerCourse(course: Course) {
+    const userStr = localStorage.getItem('user');
+    const isLoggedIn = !!userStr;
+    if (!isLoggedIn) {
+      localStorage.setItem('pendingRegistration', String(course.id));
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/my-courses']);
     }
   }
 }

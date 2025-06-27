@@ -4,7 +4,7 @@
       <img src="/assets/graduation-hat.png" alt="Coursa Logo" class="logo-img" />
       <h2 class="logo-text">Coursa</h2>
     </div>
-    <div class="auth-buttons" *ngIf="!user && showLoginButton">
+    <div class="auth-buttons" *ngIf="!user">
       <button mat-flat-button color="primary" class="login-btn" routerLink="/login">Log In</button>
     </div>
     <div *ngIf="user" class="user-avatar-menu">
@@ -19,9 +19,11 @@
           </div>
         </button>
         <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/">Home</button>
+        <button mat-menu-item routerLink="/my-courses">My Courses</button>
         <button mat-menu-item>Profile</button>
         <button mat-menu-item>Settings</button>
-        <button mat-menu-item (click)="logout.emit()">Logout</button>
+        <button mat-menu-item (click)="onLogout()">Logout</button>
       </mat-menu>
     </div>
   </div>

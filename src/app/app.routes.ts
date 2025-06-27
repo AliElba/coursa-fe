@@ -1,9 +1,19 @@
 import { Routes } from '@angular/router';
 import { LandingComponent } from './features/landing/landing.component';
 import { LoginComponent } from './features/login/login.component';
+import { MyCoursesComponent } from './features/my-courses/my-courses.component';
+import { LayoutComponent } from './layout.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent, pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: LandingComponent, pathMatch: 'full' },
+      { path: 'login', component: LoginComponent },
+      { path: 'my-courses', component: MyCoursesComponent },
+      // Add more private routes here
+    ]
+  },
   { path: '**', redirectTo: '' }
 ];

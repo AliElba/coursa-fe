@@ -5,11 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { HeaderComponent } from '../../shared/components/header/header.component';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
-import { AuthApi, Configuration, GoogleLoginDto, AuthResponseDto } from '../../generated/api';
+import { AuthApi, GoogleLoginDto } from '../../generated/api';
 import { ApiConfigService } from '../../core/services/api-config.service';
+import { AuthService } from '../../core/services/auth.service';
 
 declare const google: any;
 interface CredentialResponse {
@@ -21,7 +21,7 @@ interface CredentialResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, HeaderComponent],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -33,7 +33,8 @@ export class LoginComponent implements AfterViewInit {
     private fb: FormBuilder,
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
-    private apiConfig: ApiConfigService
+    private apiConfig: ApiConfigService,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -87,7 +88,7 @@ export class LoginComponent implements AfterViewInit {
 
       // Store the accessToken and user info from backend response
       localStorage.setItem('access_token', data.accessToken);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      this.authService.setUser(data.user);
 
       // Log the backend response for debugging
       console.log('Backend AuthResponse:', data);
