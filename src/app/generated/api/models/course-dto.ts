@@ -17,50 +17,50 @@
 /**
  * 
  * @export
- * @interface UserDto
+ * @interface CourseDto
  */
-export interface UserDto {
+export interface CourseDto {
     /**
      * 
      * @type {number}
-     * @memberof UserDto
+     * @memberof CourseDto
      */
     'id': number;
     /**
      * 
      * @type {string}
-     * @memberof UserDto
+     * @memberof CourseDto
      */
-    'googleId': string;
+    'title': string;
     /**
      * 
      * @type {string}
-     * @memberof UserDto
+     * @memberof CourseDto
      */
-    'email': string;
-    /**
-     * 
-     * @type {object}
-     * @memberof UserDto
-     */
-    'name'?: object | null;
-    /**
-     * 
-     * @type {object}
-     * @memberof UserDto
-     */
-    'picture'?: object | null;
+    'description': string;
     /**
      * 
      * @type {string}
-     * @memberof UserDto
+     * @memberof CourseDto
      */
-    'createdAt': string;
+    'image': string;
     /**
      * 
-     * @type {string}
-     * @memberof UserDto
+     * @type {number}
+     * @memberof CourseDto
      */
-    'updatedAt': string;
+    'hours': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CourseDto
+     */
+    'numberOfExams': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CourseDto
+     */
+    'price': number;
 }
 

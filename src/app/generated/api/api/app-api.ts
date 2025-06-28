@@ -28,7 +28,7 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const AppApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns a hello world message.
+         * Returns a hello world message to verify the API is running.
          * @summary Root endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -68,7 +68,7 @@ export const AppApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AppApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns a hello world message.
+         * Returns a hello world message to verify the API is running.
          * @summary Root endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -90,7 +90,7 @@ export const AppApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = AppApiFp(configuration)
     return {
         /**
-         * Returns a hello world message.
+         * Returns a hello world message to verify the API is running.
          * @summary Root endpoint
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -109,7 +109,7 @@ export const AppApiFactory = function (configuration?: Configuration, basePath?:
  */
 export class AppApi extends BaseAPI {
     /**
-     * Returns a hello world message.
+     * Returns a hello world message to verify the API is running.
      * @summary Root endpoint
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

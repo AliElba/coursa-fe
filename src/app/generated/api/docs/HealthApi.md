@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 # **check**
 > any check()
 
-Returns status ok if the service is running.
+Returns status ok if the service is running and healthy.
 
 ### Example
 
@@ -47,6 +47,7 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Service is healthy |  -  |
+|**503** | Service is unhealthy or not responding |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

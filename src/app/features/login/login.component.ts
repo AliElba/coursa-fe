@@ -5,11 +5,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { AuthApi, GoogleLoginDto } from '../../generated/api';
 import { ApiConfigService } from '../../core/services/api-config.service';
 import { AuthService } from '../../core/services/auth.service';
+import { CoursesService } from '../../core/services/courses.service';
 
 declare const google: any;
 interface CredentialResponse {
@@ -21,7 +23,15 @@ interface CredentialResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatIconModule,
+    MatSnackBarModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -34,7 +44,9 @@ export class LoginComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
     private apiConfig: ApiConfigService,
-    private authService: AuthService
+    private authService: AuthService,
+    private coursesService: CoursesService,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -93,11 +105,61 @@ export class LoginComponent implements AfterViewInit {
       // Log the backend response for debugging
       console.log('Backend AuthResponse:', data);
 
+      // Handle pending course registration if any
+      await this.handlePendingRegistration();
+
       // Navigate to landing page
       this.router.navigate(['/']);
     } catch (error) {
       console.error('Error handling credential response:', error);
-      // Handle error appropriately
+      this.snackBar.open('Login failed. Please try again.', 'Close', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom'
+      });
+    }
+  }
+
+  /**
+   * Handles pending course registration after successful login
+   */
+  private async handlePendingRegistration(): Promise<void> {
+    const pendingCourseId = localStorage.getItem('pendingRegistration');
+    
+    if (pendingCourseId) {
+      try {
+        const courseId = parseInt(pendingCourseId, 10);
+        
+        // Register for the pending course
+        await this.coursesService.registerForCourse(courseId);
+        
+        // Clear the pending registration
+        localStorage.removeItem('pendingRegistration');
+        
+        // Show success message
+        this.snackBar.open('Successfully registered for the course!', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+        
+        // Navigate to my courses to show the new registration
+        this.router.navigate(['/my-courses']);
+      } catch (error: any) {
+        console.error('Error registering for pending course:', error);
+        this.snackBar.open(
+          'Failed to register for the course. You can try again from the courses page.', 
+          'Close', 
+          {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom'
+          }
+        );
+        
+        // Clear the pending registration even if it failed
+        localStorage.removeItem('pendingRegistration');
+      }
     }
   }
 

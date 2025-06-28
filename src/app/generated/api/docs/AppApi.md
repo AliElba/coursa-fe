@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 # **getHello**
 > any getHello()
 
-Returns a hello world message.
+Returns a hello world message to verify the API is running.
 
 ### Example
 

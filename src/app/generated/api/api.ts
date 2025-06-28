@@ -16,5 +16,6 @@
 
 export * from './api/app-api';
 export * from './api/auth-api';
+export * from './api/courses-api';
 export * from './api/health-api';
 

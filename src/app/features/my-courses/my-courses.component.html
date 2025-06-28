@@ -1,4 +1,138 @@
 <div class="my-courses-container">
-  <h2>My Courses</h2>
-  <p>This page will show your registered courses.</p>
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <h1 class="page-title">My Courses</h1>
+      <p class="page-subtitle">Manage your course registrations and track your learning progress</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-section">
+    @if (isLoading()) {
+      <!-- Loading State -->
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading your courses...</p>
+      </div>
+    } @else if (error()) {
+      <!-- Error State -->
+      <div class="error-container">
+        <mat-icon class="error-icon">error</mat-icon>
+        <p class="error-message">{{ error() }}</p>
+        <button mat-flat-button color="primary" (click)="loadUserCourses()">
+          Try Again
+        </button>
+      </div>
+    } @else if (userCourses().length === 0) {
+      <!-- Empty State -->
+      <div class="empty-container">
+        <mat-icon class="empty-icon">school</mat-icon>
+        <h3 class="empty-title">No courses yet</h3>
+        <p class="empty-description">
+          You haven't registered for any courses yet. 
+          Explore our available courses and start your learning journey!
+        </p>
+        <button mat-flat-button color="primary" class="browse-btn" routerLink="/">
+          Browse Courses
+        </button>
+      </div>
+    } @else {
+      <!-- Courses Grid -->
+      <div class="courses-grid">
+        @for (userCourse of userCourses(); track userCourse.id) {
+          <mat-card class="course-card">
+            <!-- Course Image -->
+            <img 
+              [src]="userCourse.course.image" 
+              [alt]="userCourse.course.title"
+              class="course-image"
+              loading="lazy"
+              (error)="onImageError($event)">
+            
+            <!-- Course Content -->
+            <mat-card-content class="course-content">
+              <div class="course-header">
+                <h3 class="course-title">{{ userCourse.course.title }}</h3>
+              </div>
+
+              <p class="course-description">{{ userCourse.course.description }}</p>
+
+              <div class="course-meta">
+                <div class="meta-item">
+                  <mat-icon class="meta-icon">schedule</mat-icon>
+                  <span>{{ userCourse.course.hours }} hours</span>
+                </div>
+                <div class="meta-item">
+                  <mat-icon class="meta-icon">quiz</mat-icon>
+                  <span>{{ userCourse.course.numberOfExams }} exams</span>
+                </div>
+                <div class="meta-item">
+                  <mat-icon class="meta-icon">attach_money</mat-icon>
+                  <span>{{ userCourse.course.price }}</span>
+                </div>
+              </div>
+
+              <div class="registration-info">
+                <p class="registration-date">
+                  <mat-icon class="info-icon">event</mat-icon>
+                  Registered on {{ formatDate(userCourse.createdAt) }}
+                </p>
+              </div>
+
+              <!-- Status and Actions Container -->
+              <div class="status-actions-container">
+                <!-- Status Display -->
+                @if (userCourse.status === 'PENDING') {
+                  <div class="payment-status">
+                    <p class="status-text status-pending">
+                      <mat-icon class="status-icon">payment</mat-icon>
+                      Payment Required - Course Pending
+                    </p>
+                    <p class="status-description">
+                      Complete your payment to activate this course and start learning.
+                    </p>
+                  </div>
+                } @else if (userCourse.status === 'ACTIVE') {
+                  <div class="payment-status">
+                    <p class="status-text status-active">
+                      <mat-icon class="status-icon">check_circle</mat-icon>
+                      Payment Complete - Course Active
+                    </p>
+                    <p class="status-description">
+                      Your course is ready! Click "Start Learning" to begin your journey.
+                    </p>
+                  </div>
+                }
+
+                <!-- Action Buttons -->
+                <div class="course-actions">
+                  @if (userCourse.status === 'PENDING') {
+                    <button 
+                      mat-flat-button 
+                      color="accent" 
+                      class="pay-btn"
+                      (click)="payForCourse(userCourse)"
+                      [disabled]="isLoading()">
+                      <mat-icon>payment</mat-icon>
+                      {{ isLoading() ? 'Processing...' : 'Pay Now $' + userCourse.course.price }}
+                    </button>
+                  } @else if (userCourse.status === 'ACTIVE') {
+                    <button 
+                      mat-stroked-button 
+                      color="primary" 
+                      class="start-btn"
+                      (click)="startCourse(userCourse)">
+                      <mat-icon>play_circle</mat-icon>
+                      Start Learning
+                    </button>
+                  }
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  </div>
 </div> 

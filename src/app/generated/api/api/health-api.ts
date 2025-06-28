@@ -28,7 +28,7 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const HealthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns status ok if the service is running.
+         * Returns status ok if the service is running and healthy.
          * @summary Health check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -68,7 +68,7 @@ export const HealthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = HealthApiAxiosParamCreator(configuration)
     return {
         /**
-         * Returns status ok if the service is running.
+         * Returns status ok if the service is running and healthy.
          * @summary Health check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -90,7 +90,7 @@ export const HealthApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = HealthApiFp(configuration)
     return {
         /**
-         * Returns status ok if the service is running.
+         * Returns status ok if the service is running and healthy.
          * @summary Health check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -109,7 +109,7 @@ export const HealthApiFactory = function (configuration?: Configuration, basePat
  */
 export class HealthApi extends BaseAPI {
     /**
-     * Returns status ok if the service is running.
+     * Returns status ok if the service is running and healthy.
      * @summary Health check
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

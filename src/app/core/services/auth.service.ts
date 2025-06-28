@@ -1,9 +1,12 @@
 import { Injectable, signal } from '@angular/core';
 import { UserDto } from '../../generated/api';
+import { CoursesService } from './courses.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = signal<UserDto | null>(this.getUserFromStorage());
+
+  constructor(private coursesService: CoursesService) {}
 
   private getUserFromStorage(): UserDto | null {
     if (typeof window !== 'undefined') {
@@ -20,6 +23,10 @@ export class AuthService {
 
   clearUser() {
     localStorage.removeItem('user');
+    localStorage.removeItem('access_token');
     this.user.set(null);
+    
+    // Clear course data when user logs out
+    this.coursesService.clearCourses();
   }
 } 

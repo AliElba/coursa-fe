@@ -32,9 +32,9 @@ import type { GoogleLoginDto } from '../models';
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Exchanges a Google ID token for a JWT and user info.
+         * Exchanges a Google ID token for a JWT and user info. Creates a new user if they don\'t exist.
          * @summary Authenticate with Google
-         * @param {GoogleLoginDto} googleLoginDto 
+         * @param {GoogleLoginDto} googleLoginDto Google ID token from frontend authentication
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -78,9 +78,9 @@ export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
     return {
         /**
-         * Exchanges a Google ID token for a JWT and user info.
+         * Exchanges a Google ID token for a JWT and user info. Creates a new user if they don\'t exist.
          * @summary Authenticate with Google
-         * @param {GoogleLoginDto} googleLoginDto 
+         * @param {GoogleLoginDto} googleLoginDto Google ID token from frontend authentication
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -101,9 +101,9 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = AuthApiFp(configuration)
     return {
         /**
-         * Exchanges a Google ID token for a JWT and user info.
+         * Exchanges a Google ID token for a JWT and user info. Creates a new user if they don\'t exist.
          * @summary Authenticate with Google
-         * @param {GoogleLoginDto} googleLoginDto 
+         * @param {GoogleLoginDto} googleLoginDto Google ID token from frontend authentication
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -121,9 +121,9 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
  */
 export class AuthApi extends BaseAPI {
     /**
-     * Exchanges a Google ID token for a JWT and user info.
+     * Exchanges a Google ID token for a JWT and user info. Creates a new user if they don\'t exist.
      * @summary Authenticate with Google
-     * @param {GoogleLoginDto} googleLoginDto 
+     * @param {GoogleLoginDto} googleLoginDto Google ID token from frontend authentication
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi

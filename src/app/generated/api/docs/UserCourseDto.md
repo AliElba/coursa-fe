@@ -1,4 +1,4 @@
-# UserDto
+# UserCourseDto
 
 
 ## Properties
@@ -6,26 +6,26 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **number** |  | [default to undefined]
-**googleId** | **string** |  | [default to undefined]
-**email** | **string** |  | [default to undefined]
-**name** | **object** |  | [optional] [default to undefined]
-**picture** | **object** |  | [optional] [default to undefined]
+**userId** | **number** |  | [default to undefined]
+**courseId** | **number** |  | [default to undefined]
+**status** | **string** |  | [default to undefined]
 **createdAt** | **string** |  | [default to undefined]
 **updatedAt** | **string** |  | [default to undefined]
+**course** | [**CourseDto**](CourseDto.md) |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { UserDto } from './api';
+import { UserCourseDto } from './api';
 
-const instance: UserDto = {
+const instance: UserCourseDto = {
     id,
-    googleId,
-    email,
-    name,
-    picture,
+    userId,
+    courseId,
+    status,
     createdAt,
     updatedAt,
+    course,
 };
 ```
 
