@@ -118,8 +118,21 @@ export class CoursesService {
    * @returns The UserCourse if registered, null otherwise
    */
   isUserRegisteredForCourse(courseId: number): UserCourseDto | null {
-    const userCourses = this.userCourses();
+    const userCourses = this.userCourses?.();
+    if (!userCourses || !Array.isArray(userCourses)) {
+      return null;
+    }
     return userCourses.find(uc => uc.courseId === courseId) || null;
+  }
+
+  /**
+   * Gets the registration status text for a course
+   * @param courseId - The course ID to check
+   * @returns Status text or empty string if not registered
+   */
+  getRegistrationStatus(courseId: number): string {
+    const registration = this.isUserRegisteredForCourse(courseId);
+    return registration && registration.status ? registration.status : '';
   }
 
   /**

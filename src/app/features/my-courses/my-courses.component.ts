@@ -1,15 +1,18 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
-import { MatChipsModule } from '@angular/material/chips';
 import { CoursesService } from '../../core/services/courses.service';
 import { AuthService } from '../../core/services/auth.service';
+import { UtilsService } from '../../core/services/utils.service';
 import { UserCourseDto } from '../../generated/api';
+import { isPlatformBrowser } from '@angular/common';
+import { FunctionPipe } from '../../shared/pipes/function.pipe';
 
 /**
  * Component for displaying and managing user's registered courses
@@ -20,12 +23,14 @@ import { UserCourseDto } from '../../generated/api';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
+    RouterModule,
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
+    MatChipsModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatChipsModule
+    FunctionPipe
   ],
   templateUrl: './my-courses.component.html',
   styleUrls: ['./my-courses.component.scss']
@@ -36,6 +41,7 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
     private router: Router,
     private coursesService: CoursesService,
     private authService: AuthService,
+    public utilsService: UtilsService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -57,21 +63,13 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Initialize component by checking authentication and loading user courses
+   * Initialize component by fetching courses from the API
    */
   async ngOnInit(): Promise<void> {
-    // Only run in browser environment
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
+    // Only fetch courses in browser environment
+    if (isPlatformBrowser(this.platformId)) {
+      await this.loadUserCourses();
     }
-
-    // Check if user is authenticated
-    if (!this.user()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    await this.loadUserCourses();
   }
 
   /**
@@ -122,19 +120,6 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
         }
       );
     }
-  }
-
-  /**
-   * Format date for display
-   * @param dateString - ISO date string
-   * @returns Formatted date string
-   */
-  formatDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
   }
 
   /**

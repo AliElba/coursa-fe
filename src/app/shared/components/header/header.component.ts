@@ -15,10 +15,16 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  avatarLoadError = false;
+
   constructor(public auth: AuthService) {}
 
   get user() {
     return this.auth.user();
+  }
+
+  onAvatarError() {
+    this.avatarLoadError = true;
   }
 
   onLogout() {

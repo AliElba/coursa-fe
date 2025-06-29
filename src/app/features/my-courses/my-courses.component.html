@@ -76,7 +76,7 @@
               <div class="registration-info">
                 <p class="registration-date">
                   <mat-icon class="info-icon">event</mat-icon>
-                  Registered on {{ formatDate(userCourse.createdAt) }}
+                  Registered on {{ userCourse.createdAt | function:utilsService.formatDate }}
                 </p>
               </div>
 

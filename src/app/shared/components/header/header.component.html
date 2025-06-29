@@ -9,12 +9,22 @@
     </div>
     <div *ngIf="user" class="user-avatar-menu">
       <button mat-icon-button [matMenuTriggerFor]="userMenu">
-        <img [src]="user.picture" [alt]="user.name" class="avatar-img" />
+        <ng-container *ngIf="!avatarLoadError; else fallbackIcon">
+          <img [src]="user.picture" [alt]="user.name" class="avatar-img" (error)="onAvatarError()" />
+        </ng-container>
+        <ng-template #fallbackIcon>
+          <mat-icon class="avatar-img">account_circle</mat-icon>
+        </ng-template>
       </button>
       <mat-menu #userMenu="matMenu">
         <button mat-menu-item disabled>
           <div class="menu-user-info">
-            <img [src]="user.picture" [alt]="user.name" class="avatar-img-menu" />
+            <ng-container *ngIf="!avatarLoadError; else fallbackMenuIcon">
+              <img [src]="user.picture" [alt]="user.name" class="avatar-img-menu" (error)="onAvatarError()" />
+            </ng-container>
+            <ng-template #fallbackMenuIcon>
+              <mat-icon class="avatar-img-menu">account_circle</mat-icon>
+            </ng-template>
             <span class="menu-user-name">{{ user.name }}</span>
           </div>
         </button>

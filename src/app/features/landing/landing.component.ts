@@ -8,8 +8,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { CoursesService } from '../../core/services/courses.service';
 import { AuthService } from '../../core/services/auth.service';
-import { CourseDto } from '../../generated/api';
+import { CourseDto, UserCourseDto } from '../../generated/api';
 import { isPlatformBrowser } from '@angular/common';
+import { FunctionPipe } from '../../shared/pipes/function.pipe';
 
 @Component({
   selector: 'app-landing',
@@ -21,7 +22,8 @@ import { isPlatformBrowser } from '@angular/common';
     MatCardModule, 
     MatIconModule, 
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FunctionPipe
   ],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
@@ -32,7 +34,7 @@ export class LandingComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object, 
     private router: Router,
-    private coursesService: CoursesService,
+    public coursesService: CoursesService,
     private authService: AuthService,
     private snackBar: MatSnackBar
   ) {}
@@ -52,6 +54,10 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   get user() {
     return this.authService.user;
+  }
+
+  get userCourses() {
+    return this.coursesService.userCourses;
   }
 
   /**
@@ -165,25 +171,6 @@ export class LandingComponent implements OnInit, OnDestroy {
         }
       );
     }
-  }
-
-  /**
-   * Checks if the current user is registered for a specific course
-   * @param courseId - The course ID to check
-   * @returns True if user is registered, false otherwise
-   */
-  isRegisteredForCourse(courseId: number): boolean {
-    return !!this.coursesService.isUserRegisteredForCourse(courseId);
-  }
-
-  /**
-   * Gets the registration status text for a course
-   * @param courseId - The course ID to check
-   * @returns Status text or empty string if not registered
-   */
-  getRegistrationStatus(courseId: number): string {
-    const registration = this.coursesService.isUserRegisteredForCourse(courseId);
-    return registration ? registration.status : '';
   }
 
   /**
