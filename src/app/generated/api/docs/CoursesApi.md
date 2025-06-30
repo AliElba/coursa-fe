@@ -6,6 +6,7 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**activateCourse**](#activatecourse) | **PATCH** /my-courses/{id}/activate | Activate user course|
 |[**getAllCourses**](#getallcourses) | **GET** /courses | Get all courses|
+|[**getCourseById**](#getcoursebyid) | **GET** /courses/{id} | Get course details by ID|
 |[**getMyCourses**](#getmycourses) | **GET** /my-courses | Get user courses|
 |[**registerCourse**](#registercourse) | **POST** /courses/{id}/register | Register for a course|
 
@@ -103,6 +104,57 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | List of all courses retrieved successfully |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getCourseById**
+> CourseDto getCourseById()
+
+
+### Example
+
+```typescript
+import {
+    CoursesApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CoursesApi(configuration);
+
+let id: number; //Course ID (default to undefined)
+
+const { status, data } = await apiInstance.getCourseById(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] | Course ID | defaults to undefined|
+
+
+### Return type
+
+**CourseDto**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Course details |  -  |
+|**404** | Course not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

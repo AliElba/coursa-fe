@@ -154,6 +154,9 @@
 // Course Content
 .course-content {
   padding: 1.5rem !important;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 // Course Header
@@ -262,7 +265,9 @@
   flex-direction: column;
   gap: 16px;
   margin-top: auto;
+  align-self: flex-end;
   padding-top: 16px;
+  width: 100%;
 
   .payment-status {
     margin-bottom: 0;

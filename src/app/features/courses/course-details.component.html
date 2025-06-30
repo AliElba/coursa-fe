@@ -1,0 +1,41 @@
+<div class="course-details-container">
+  <div class="content-section">
+    <div class="course-header-block">
+      <h1 class="page-title">{{ course?.title }}</h1>
+      <p class="page-subtitle">{{ course?.description }}</p>
+      <div class="course-hours" *ngIf="course?.hours">
+        <mat-icon class="meta-icon">schedule</mat-icon> {{ course?.hours }} hours
+      </div>
+    </div>
+    <ng-container *ngIf="isLoading; else loaded">
+      <div class="loading-state">
+        <mat-spinner diameter="48"></mat-spinner>
+        <p>Loading course details...</p>
+      </div>
+    </ng-container>
+    <ng-template #loaded>
+      <ng-container *ngIf="error; else courseContent">
+        <div class="error-state">
+          <mat-icon color="warn">error</mat-icon>
+          <p>{{ error }}</p>
+        </div>
+      </ng-container>
+      <ng-template #courseContent>
+        <div class="lectures-section" *ngIf="course && course.lectures?.length">
+          <h2 class="lectures-title">Lectures</h2>
+          <mat-card *ngFor="let lecture of course.lectures">
+            <div class="lecture-info">
+              <h3 class="lecture-title">{{ lecture.title }}</h3>
+              <p class="lecture-description">{{ lecture.description }}</p>
+              <div class="lecture-links">
+                <button mat-stroked-button color="primary" (click)="watchVideo(lecture.videoUrl)" [disabled]="!lecture.videoUrl">Watch Video</button>
+                <a *ngIf="lecture.materialUrl" [href]="lecture.materialUrl" target="_blank" rel="noopener" class="material-link">Material</a>
+              </div>
+            </div>
+            <img *ngIf="lecture.image" [src]="lecture.image" [alt]="lecture.title" class="lecture-image" />
+          </mat-card>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</div> 

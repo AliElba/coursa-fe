@@ -13,63 +13,48 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import type { LectureDto } from './lecture-dto';
 
 /**
  * 
  * @export
- * @interface CourseDto
+ * @interface LectureDto
  */
-export interface CourseDto {
+export interface LectureDto {
     /**
      * 
      * @type {number}
-     * @memberof CourseDto
+     * @memberof LectureDto
      */
     'id': number;
     /**
      * 
      * @type {string}
-     * @memberof CourseDto
+     * @memberof LectureDto
      */
     'title': string;
     /**
      * 
      * @type {string}
-     * @memberof CourseDto
+     * @memberof LectureDto
      */
     'description': string;
     /**
      * 
      * @type {string}
-     * @memberof CourseDto
+     * @memberof LectureDto
      */
     'image': string;
     /**
      * 
-     * @type {number}
-     * @memberof CourseDto
+     * @type {string}
+     * @memberof LectureDto
      */
-    'hours': number;
+    'videoUrl': string;
     /**
      * 
-     * @type {number}
-     * @memberof CourseDto
+     * @type {string}
+     * @memberof LectureDto
      */
-    'numberOfExams': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CourseDto
-     */
-    'price': number;
-    /**
-     * 
-     * @type {Array<LectureDto>}
-     * @memberof CourseDto
-     */
-    'lectures': Array<LectureDto>;
+    'materialUrl': string;
 }
 

@@ -143,4 +143,14 @@ export class CoursesService {
     this.userCourses.set([]);
     this.error.set(null);
   }
+
+  /**
+   * Fetches a course by its ID
+   * @param id - The course ID
+   * @returns Promise<CourseDto>
+   */
+  async getCourseById(id: number): Promise<CourseDto> {
+    const response = await this.coursesApi.getCourseById(id);
+    return response.data;
+  }
 } 

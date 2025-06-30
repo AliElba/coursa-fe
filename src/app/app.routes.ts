@@ -3,17 +3,20 @@ import { LandingComponent } from './features/landing/landing.component';
 import { LoginComponent } from './features/login/login.component';
 import { MyCoursesComponent } from './features/my-courses/my-courses.component';
 import { LayoutComponent } from './layout.component';
+import { CourseDetailsComponent } from './features/courses/course-details.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
+      // Add more private routes here
       { path: '', component: LandingComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'my-courses', component: MyCoursesComponent },
-      // Add more private routes here
+      { path: 'courses/:id', component: CourseDetailsComponent },
     ]
   },
+  
   { path: '**', redirectTo: '' }
 ];

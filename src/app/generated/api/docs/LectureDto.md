@@ -1,4 +1,4 @@
-# CourseDto
+# LectureDto
 
 
 ## Properties
@@ -9,25 +9,21 @@ Name | Type | Description | Notes
 **title** | **string** |  | [default to undefined]
 **description** | **string** |  | [default to undefined]
 **image** | **string** |  | [default to undefined]
-**hours** | **number** |  | [default to undefined]
-**numberOfExams** | **number** |  | [default to undefined]
-**price** | **number** |  | [default to undefined]
-**lectures** | [**Array&lt;LectureDto&gt;**](LectureDto.md) |  | [default to undefined]
+**videoUrl** | **string** |  | [default to undefined]
+**materialUrl** | **string** |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { CourseDto } from './api';
+import { LectureDto } from './api';
 
-const instance: CourseDto = {
+const instance: LectureDto = {
     id,
     title,
     description,
     image,
-    hours,
-    numberOfExams,
-    price,
-    lectures,
+    videoUrl,
+    materialUrl,
 };
 ```
 
