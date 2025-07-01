@@ -1,9 +1,22 @@
 <div class="login-container">
   <div class="login-card">
+    <!-- Top Illustration -->
+    <div class="login-logo-block">
+      <a [routerLink]="['/']" class="logo-link">
+        <img src="assets/graduation-hat.png" alt="Coursa Logo" class="login-logo-img logo-clickable" />
+      </a>
+      <div class="login-app-name">Coursa</div>
+    </div>
     <div class="login-header">
       <h2 class="login-title">Welcome Back</h2>
       <p class="login-subtitle">Sign in to your account to continue</p>
     </div>
+    <!-- Google Sign-In First -->
+    <div id="g_id_signin" class="google-login-btn"></div>
+    <div class="login-divider">
+      <span>Or continue with email</span>
+    </div>
+    <!-- Username/Password Login -->
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="login-field" floatLabel="always">
         <mat-label>Email</mat-label>
@@ -27,7 +40,5 @@
         <a class="forgot-password" href="#">Forgot password?</a>
       </div>
     </form>
-    <div class="google-signin-divider">or</div>
-    <div id="g_id_signin" class="google-login-btn"></div>
   </div>
 </div>

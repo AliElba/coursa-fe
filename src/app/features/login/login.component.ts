@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { AuthApi, GoogleLoginDto } from '../../generated/api';
@@ -30,7 +31,8 @@ interface CredentialResponse {
     MatInputModule, 
     MatButtonModule, 
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -177,5 +179,9 @@ export class LoginComponent implements AfterViewInit {
       // Handle login logic here
       console.log(this.loginForm.value);
     }
+  }
+
+  goToLanding() {
+    this.router.navigate(['/']);
   }
 }

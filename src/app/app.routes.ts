@@ -12,11 +12,10 @@ export const routes: Routes = [
     children: [
       // Add more private routes here
       { path: '', component: LandingComponent, pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
       { path: 'my-courses', component: MyCoursesComponent },
       { path: 'courses/:id', component: CourseDetailsComponent },
     ]
   },
-  
+  { path: 'login', component: LoginComponent },  
   { path: '**', redirectTo: '' }
 ];
