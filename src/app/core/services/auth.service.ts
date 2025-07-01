@@ -29,4 +29,12 @@ export class AuthService {
     // Clear course data when user logs out
     this.coursesService.clearCourses();
   }
+
+  /**
+   * Logs out the current user by clearing user info and token from storage and memory.
+   * Also clears course data.
+   */
+  logout() {
+    this.clearUser();
+  }
 } 

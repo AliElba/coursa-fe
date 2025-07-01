@@ -63,6 +63,7 @@ export class CoursesService {
     } catch (err: any) {
       this.error.set(err.message || 'Failed to fetch user courses');
       console.error('Error fetching user courses:', err);
+      throw err;
     } finally {
       this.isLoading.set(false);
     }

@@ -104,9 +104,25 @@ export class LandingComponent implements OnInit, OnDestroy {
   async loadUserCourses(): Promise<void> {
     try {
       await this.coursesService.fetchUserCourses();
-    } catch (error) {
-      console.error('Failed to load user courses:', error);
-      // Don't show error to user as this is not critical for the landing page
+    } catch (error: any) {
+      console.log('error', error)
+      if (error.status === 401) {
+        // Log out the user and show a user-friendly message
+        this.authService.logout();
+        this.snackBar.open('Your session has expired. You may need to log in again to access your courses.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+        // Do not redirect to login, just show public content
+      } else {
+        // Handle other errors as needed
+        this.snackBar.open('Failed to load your courses. Please try again later.', 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
+      }
     }
   }
 

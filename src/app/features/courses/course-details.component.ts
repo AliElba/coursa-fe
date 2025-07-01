@@ -8,11 +8,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CoursesService } from '../../core/services/courses.service';
 import { CourseDto } from '../../generated/api';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { VideoModalComponent } from './video-modal.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 @Component({
   selector: 'app-course-details',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule, VideoModalComponent, SafeUrlPipe],
   templateUrl: './course-details.component.html',
   styleUrls: ['./course-details.component.scss']
 })
@@ -21,7 +24,7 @@ export class CourseDetailsComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
 
-  constructor(private route: ActivatedRoute, private coursesService: CoursesService) {}
+  constructor(private route: ActivatedRoute, private coursesService: CoursesService, private dialog: MatDialog) {}
 
   async ngOnInit() {
     this.isLoading = true;
@@ -36,10 +39,31 @@ export class CourseDetailsComponent implements OnInit {
     }
   }
 
-  // Placeholder for future video watching logic
+  /**
+   * Opens a Material modal dialog to play the video from the given URL.
+   * Converts Google Drive URLs to embed format for iframe playback.
+   */
   watchVideo(url: string | null | undefined): void {
     if (url) {
-      window.open(url, '_blank', 'noopener');
+      this.dialog.open(VideoModalComponent, {
+        data: { url: this.getGoogleDriveEmbedUrl(url) },
+        width: '720px',
+        maxWidth: '95vw',
+        panelClass: 'video-dialog'
+      });
     }
+  }
+
+  /**
+   * Converts a Google Drive share URL to an embeddable preview URL for iframes.
+   * Example: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+   * Result:  https://drive.google.com/file/d/FILE_ID/preview
+   */
+  getGoogleDriveEmbedUrl(url: string): string {
+    const match = url.match(/\/file\/d\/([^/]+)/);
+    if (match) {
+      return `https://drive.google.com/file/d/${match[1]}/preview`;
+    }
+    return url;
   }
 } 
