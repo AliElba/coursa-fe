@@ -1,10 +1,22 @@
 <div class="course-details-container">
   <div class="content-section">
-    <div class="course-header-block">
-      <h1 class="page-title">{{ course?.title }}</h1>
-      <p class="page-subtitle">{{ course?.description }}</p>
-      <div class="course-hours" *ngIf="course?.hours">
-        <mat-icon class="meta-icon">schedule</mat-icon> {{ course?.hours }} hours
+    <div 
+      class="course-header-block"
+      [ngStyle]="{
+        'background-image': course?.image
+          ? 'linear-gradient(135deg, rgba(40,40,60,0.7) 0%, rgba(80,80,120,0.5) 100%), url(' + (course?.image || '') + ')'
+          : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'background-size': 'cover',
+        'background-position': 'center',
+        'background-repeat': 'no-repeat'
+      }"
+    >
+      <div class="header-overlay">
+        <h1 class="page-title">{{ course?.title }}</h1>
+        <p class="page-subtitle">{{ course?.description }}</p>
+        <div class="course-hours" *ngIf="course?.hours">
+          <mat-icon class="meta-icon">schedule</mat-icon> {{ course?.hours }} hours
+        </div>
       </div>
     </div>
     <ng-container *ngIf="isLoading; else loaded">
@@ -28,7 +40,10 @@
               <h3 class="lecture-title">{{ lecture.title }}</h3>
               <p class="lecture-description">{{ lecture.description }}</p>
               <div class="lecture-links">
-                <button mat-stroked-button color="primary" (click)="watchVideo(lecture.videoUrl)" [disabled]="!lecture.videoUrl">Watch Video</button>
+                <button mat-stroked-button color="primary" (click)="watchVideo(lecture.videoUrl)" [disabled]="!lecture.videoUrl">
+                  <mat-icon>play_circle</mat-icon>
+                  Watch Video
+                </button>
                 <a *ngIf="lecture.materialUrl" [href]="lecture.materialUrl" target="_blank" rel="noopener" class="material-link">Material</a>
               </div>
             </div>

@@ -143,6 +143,12 @@
   margin: 0 auto 2.5rem auto;
   padding: 2.5rem 1rem 1.5rem 1rem;
   text-align: left;
+  position: relative;
+  min-height: 220px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
 }
 
 .page-title {
@@ -183,4 +189,17 @@
 .course-hours .meta-icon {
   font-size: 20px;
   vertical-align: middle;
+}
+
+// Overlay for readability on top of image/gradient
+.header-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 2rem 2rem 1.5rem 2rem;
+  background: rgba(32, 32, 48, 0.45);
+  border-radius: 1.5rem;
+  box-sizing: border-box;
+  color: #fff;
+  backdrop-filter: blur(1.5px);
 } 
