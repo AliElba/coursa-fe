@@ -39,61 +39,43 @@
       </div>
     } @else {
       <!-- Courses Grid -->
-      <div class="courses-grid">
-        @for (userCourse of userCourses(); track userCourse.id) {
-          <mat-card class="course-card">
-            <!-- Course Image -->
-            <img 
-              [src]="userCourse.course.image" 
-              [alt]="userCourse.course.title"
-              class="course-image"
-              loading="lazy"
-              (error)="onImageError($event)">
-            
-            <!-- Course Content -->
-            <mat-card-content class="course-content">
-              <div class="course-header">
-                <h3 class="course-title">{{ userCourse.course.title }}</h3>
-              </div>
-
-              <p class="course-description">{{ userCourse.course.description }}</p>
-
-              <div class="course-meta">
-                <div class="meta-item">
-                  <mat-icon class="meta-icon">schedule</mat-icon>
-                  <span>{{ userCourse.course.hours }} hours</span>
+      <div *ngIf="activeCourses.length > 0">
+        <h2 class="section-title">Active Courses</h2>
+        <div class="courses-grid">
+          @for (userCourse of activeCourses; track userCourse.id) {
+            <mat-card class="course-card">
+              <img 
+                [src]="userCourse.course.image" 
+                [alt]="userCourse.course.title"
+                class="course-image"
+                loading="lazy"
+                (error)="onImageError($event)">
+              <mat-card-content class="course-content">
+                <div class="course-header">
+                  <h3 class="course-title">{{ userCourse.course.title }}</h3>
                 </div>
-                <div class="meta-item">
-                  <mat-icon class="meta-icon">quiz</mat-icon>
-                  <span>{{ userCourse.course.numberOfExams }} exams</span>
-                </div>
-                <div class="meta-item">
-                  <mat-icon class="meta-icon">attach_money</mat-icon>
-                  <span>{{ userCourse.course.price }}</span>
-                </div>
-              </div>
-
-              <div class="registration-info">
-                <p class="registration-date">
-                  <mat-icon class="info-icon">event</mat-icon>
-                  Registered on {{ userCourse.createdAt | function:utilsService.formatDate }}
-                </p>
-              </div>
-
-              <!-- Status and Actions Container -->
-              <div class="status-actions-container">
-                <!-- Status Display -->
-                @if (userCourse.status === 'PENDING') {
-                  <div class="payment-status">
-                    <p class="status-text status-pending">
-                      <mat-icon class="status-icon">payment</mat-icon>
-                      Payment Required - Course Pending
-                    </p>
-                    <p class="status-description">
-                      Complete your payment to activate this course and start learning.
-                    </p>
+                <p class="course-description">{{ userCourse.course.description }}</p>
+                <div class="course-meta">
+                  <div class="meta-item">
+                    <mat-icon class="meta-icon">schedule</mat-icon>
+                    <span>{{ userCourse.course.hours }} hours</span>
                   </div>
-                } @else if (userCourse.status === 'ACTIVE') {
+                  <div class="meta-item">
+                    <mat-icon class="meta-icon">quiz</mat-icon>
+                    <span>{{ userCourse.course.numberOfExams }} exams</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon class="meta-icon">attach_money</mat-icon>
+                    <span>{{ userCourse.course.price }}</span>
+                  </div>
+                </div>
+                <div class="registration-info">
+                  <p class="registration-date">
+                    <mat-icon class="info-icon">event</mat-icon>
+                    Registered on {{ userCourse.createdAt | function:utilsService.formatDate }}
+                  </p>
+                </div>
+                <div class="status-actions-container">
                   <div class="payment-status">
                     <p class="status-text status-active">
                       <mat-icon class="status-icon">check_circle</mat-icon>
@@ -103,11 +85,69 @@
                       Your course is ready! Click "Start Learning" to begin your journey.
                     </p>
                   </div>
-                }
-
-                <!-- Action Buttons -->
-                <div class="course-actions">
-                  @if (userCourse.status === 'PENDING') {
+                  <div class="course-actions">
+                    <button 
+                      mat-stroked-button 
+                      color="primary" 
+                      class="start-btn"
+                      [routerLink]="['/courses', userCourse.course.id]">
+                      <mat-icon>school</mat-icon>
+                      Start Learning
+                    </button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      </div>
+      <div *ngIf="pendingCourses.length > 0">
+        <h2 class="section-title">Pending Courses</h2>
+        <div class="courses-grid">
+          @for (userCourse of pendingCourses; track userCourse.id) {
+            <mat-card class="course-card">
+              <img 
+                [src]="userCourse.course.image" 
+                [alt]="userCourse.course.title"
+                class="course-image"
+                loading="lazy"
+                (error)="onImageError($event)">
+              <mat-card-content class="course-content">
+                <div class="course-header">
+                  <h3 class="course-title">{{ userCourse.course.title }}</h3>
+                </div>
+                <p class="course-description">{{ userCourse.course.description }}</p>
+                <div class="course-meta">
+                  <div class="meta-item">
+                    <mat-icon class="meta-icon">schedule</mat-icon>
+                    <span>{{ userCourse.course.hours }} hours</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon class="meta-icon">quiz</mat-icon>
+                    <span>{{ userCourse.course.numberOfExams }} exams</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon class="meta-icon">attach_money</mat-icon>
+                    <span>{{ userCourse.course.price }}</span>
+                  </div>
+                </div>
+                <div class="registration-info">
+                  <p class="registration-date">
+                    <mat-icon class="info-icon">event</mat-icon>
+                    Registered on {{ userCourse.createdAt | function:utilsService.formatDate }}
+                  </p>
+                </div>
+                <div class="status-actions-container">
+                  <div class="payment-status">
+                    <p class="status-text status-pending">
+                      <mat-icon class="status-icon">payment</mat-icon>
+                      Payment Required - Course Pending
+                    </p>
+                    <p class="status-description">
+                      Complete your payment to activate this course and start learning.
+                    </p>
+                  </div>
+                  <div class="course-actions">
                     <button 
                       mat-flat-button 
                       color="accent" 
@@ -117,21 +157,12 @@
                       <mat-icon>payment</mat-icon>
                       {{ isLoading() ? 'Processing...' : 'Pay Now $' + userCourse.course.price }}
                     </button>
-                  } @else if (userCourse.status === 'ACTIVE') {
-                    <button 
-                      mat-stroked-button 
-                      color="primary" 
-                      class="start-btn"
-                      [routerLink]="['/courses', userCourse.course.id]">
-                      <mat-icon>school</mat-icon>
-                      Start Learning
-                    </button>
-                  }
+                  </div>
                 </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
       </div>
     }
   </div>

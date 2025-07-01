@@ -62,6 +62,14 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
     return this.authService.user;
   }
 
+  get activeCourses() {
+    return this.userCourses().filter((uc: any) => uc.status === 'ACTIVE');
+  }
+
+  get pendingCourses() {
+    return this.userCourses().filter((uc: any) => uc.status === 'PENDING');
+  }
+
   /**
    * Initialize component by fetching courses from the API
    */
