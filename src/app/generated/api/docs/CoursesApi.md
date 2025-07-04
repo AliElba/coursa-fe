@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**activateCourse**](#activatecourse) | **PATCH** /my-courses/{id}/activate | Activate user course|
+|[**createStripeCheckoutSession**](#createstripecheckoutsession) | **POST** /courses/{id}/checkout-session | Create Stripe Checkout session|
 |[**getAllCourses**](#getallcourses) | **GET** /courses | Get all courses|
 |[**getCourseById**](#getcoursebyid) | **GET** /courses/{id} | Get course details by ID|
 |[**getMyCourses**](#getmycourses) | **GET** /my-courses | Get user courses|
@@ -60,6 +61,57 @@ void (empty response body)
 |**200** | Course status updated to ACTIVE successfully |  -  |
 |**401** | Unauthorized - Invalid or missing JWT token |  -  |
 |**404** | UserCourse not found or does not belong to user |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createStripeCheckoutSession**
+> StripeCheckoutSessionDto createStripeCheckoutSession()
+
+Create a Stripe Checkout session for the specified course and return the session URL.
+
+### Example
+
+```typescript
+import {
+    CoursesApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CoursesApi(configuration);
+
+let id: number; //Course ID to purchase (default to undefined)
+
+const { status, data } = await apiInstance.createStripeCheckoutSession(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] | Course ID to purchase | defaults to undefined|
+
+
+### Return type
+
+**StripeCheckoutSessionDto**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Stripe Checkout session created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

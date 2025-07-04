@@ -134,17 +134,9 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
    * Handle payment for a pending course
    * @param userCourse - The user course to pay for
    */
-  payForCourse(userCourse: UserCourseDto): void {
-    // TODO: Implement payment flow
-    // This would typically integrate with a payment provider like Stripe
-    console.log('Payment flow for course:', userCourse.course.title);
-    
-    // For now, show a message to the user
-    this.snackBar.open(
-      `Payment flow for ${userCourse.course.title} would be implemented here`,
-      'Close',
-      { duration: 3000 }
-    );
+  async payForCourse(userCourse: UserCourseDto): Promise<void> {
+    // Start Stripe Checkout for this course
+    await this.coursesService.startStripeCheckout(userCourse.courseId);
   }
 
   /**

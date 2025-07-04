@@ -10,12 +10,11 @@ import { CourseDto } from '../../generated/api';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { VideoModalComponent } from './video-modal.component';
-import { SafeUrlPipe } from './safe-url.pipe';
 
 @Component({
   selector: 'app-course-details',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule, VideoModalComponent, SafeUrlPipe],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './course-details.component.html',
   styleUrls: ['./course-details.component.scss']
 })

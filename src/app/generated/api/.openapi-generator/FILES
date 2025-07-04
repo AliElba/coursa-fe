@@ -16,6 +16,7 @@ docs/CoursesApi.md
 docs/GoogleLoginDto.md
 docs/HealthApi.md
 docs/LectureDto.md
+docs/StripeCheckoutSessionDto.md
 docs/UserCourseDto.md
 docs/UserDto.md
 git_push.sh
@@ -25,5 +26,6 @@ models/course-dto.ts
 models/google-login-dto.ts
 models/index.ts
 models/lecture-dto.ts
+models/stripe-checkout-session-dto.ts
 models/user-course-dto.ts
 models/user-dto.ts

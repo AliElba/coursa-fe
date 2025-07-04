@@ -1,0 +1,23 @@
+<div class="payment-success-container">
+  <div class="logo-block">
+    <img src="assets/graduation-hat.png" alt="Coursa Logo" class="logo-img" />
+    <div class="app-name">Coursa</div>
+  </div>
+  <img src="assets/payment.jpg" alt="Payment success illustration" class="success-image" />
+  <h1 class="success-title"><mat-icon color="primary">check_circle</mat-icon> Payment Successful!</h1>
+  <p class="motivation">Congratulations on investing in your learning journey!</p>
+  <div class="activation-info">
+    <p>
+      To activate your course, please <b>email us a copy of your payment confirmation and your Gmail account</b>.<br>
+      Our team will activate your course for you <b>very soon</b>!
+    </p>
+    <div class="contact-email">
+      <span>Email: </span><a href="mailto:support@coursa.com">support(at)coursa.com</a>
+    </div>
+    <div class="hint">
+      <mat-icon color="disabled" fontIcon="info" aria-label="Hint"></mat-icon>
+      <span>Your <b>Gmail account</b> is required to share the activated course materials and videos with you.</span>
+    </div>
+  </div>
+  <button mat-flat-button color="primary" [routerLink]="['/my-courses']">Go to My Courses</button>
+</div> 
