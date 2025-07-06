@@ -198,4 +198,11 @@ export class LandingComponent implements OnInit, OnDestroy {
     const img = event.target as HTMLImageElement;
     img.src = 'assets/graduation-hat.png'; // Fallback image
   }
+
+  /**
+   * trackBy function for courses ngFor for better performance
+   */
+  trackByCourseId(index: number, course: CourseDto): number {
+    return course.id;
+  }
 }

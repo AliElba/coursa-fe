@@ -18,78 +18,80 @@
   <div class="section" #coursesSection>
     <h2 class="section-title">Available Courses</h2>
     
-    @if (isLoading()) {
+    <ng-container *ngIf="isLoading(); else notLoading">
       <!-- Shared Skeleton Loader: always shown immediately when loading -->
-      <app-skeleton-loader
-        [count]="skeletonCount"
-      />
-    } @else if (error()) {
-      <!-- Error State -->
-      <div class="error-container">
-        <mat-icon class="error-icon">error</mat-icon>
-        <p class="error-message">{{ error() }}</p>
-        <button mat-flat-button color="primary" (click)="loadCourses()">
-          Try Again
-        </button>
-      </div>
-    } @else if (!isLoading() && courses().length === 0) {
-      <!-- Empty State: Only show if backend returns empty array and not loading -->
-      <div class="empty-container">
-        <mat-icon class="empty-icon">school</mat-icon>
-        <p>No courses available at the moment.</p>
-        <p>Please check back later!</p>
-      </div>
-    } else {
-      <!-- Courses Grid -->
-      <div class="card-grid">
-        @for (course of courses(); track course.id) {
-          <mat-card class="content-card">
-            <img 
-              [src]="course.image" 
-              [alt]="course.title"
-              class="card-image"
-              loading="lazy"
-              (error)="onImageError($event)">
-            <mat-card-content class="card-content-flex">
-              <h3 class="card-title">{{ course.title }}</h3>
-              <div class="card-meta">
-                <span class="meta-item">
-                  <mat-icon class="meta-icon">schedule</mat-icon>
-                  {{ course.hours }} hours
-                </span>
-                <span class="meta-item">
-                  <mat-icon class="meta-icon">quiz</mat-icon>
-                  {{ course.numberOfExams }} exams
-                </span>
-              </div>
-              <p class="card-description">{{ course.description }}</p>
-              
-              @if (userCourses() && (course.id | function:coursesService.isUserRegisteredForCourse.bind(coursesService))) {
-                <!-- Registration Status -->
-                <div class="registration-status">
-                  <mat-icon class="status-icon">check_circle</mat-icon>
-                  <span class="status-text">Registered ({{ course.id | function:coursesService.getRegistrationStatus.bind(coursesService) }})</span>
+      <app-skeleton-loader [count]="skeletonCount"></app-skeleton-loader>
+    </ng-container>
+    <ng-template #notLoading>
+      <ng-container *ngIf="error(); else noError">
+        <!-- Error State -->
+        <div class="error-container">
+          <mat-icon class="error-icon">error</mat-icon>
+          <p class="error-message">{{ error() }}</p>
+          <button mat-flat-button color="primary" (click)="loadCourses()">
+            Try Again
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #noError>
+        <ng-container *ngIf="!isLoading() && courses().length === 0; else showCourses">
+          <!-- Empty State: Only show if backend returns empty array and not loading -->
+          <div class="empty-container">
+            <mat-icon class="empty-icon">school</mat-icon>
+            <p>No courses available at the moment.</p>
+            <p>Please check back later!</p>
+          </div>
+        </ng-container>
+        <ng-template #showCourses>
+          <!-- Courses Grid -->
+          <div class="card-grid">
+            <mat-card class="content-card" *ngFor="let course of courses(); trackBy: trackByCourseId">
+              <img 
+                [src]="course.image" 
+                [alt]="course.title"
+                class="card-image"
+                loading="lazy"
+                (error)="onImageError($event)">
+              <mat-card-content class="card-content-flex">
+                <h3 class="card-title">{{ course.title }}</h3>
+                <div class="card-meta">
+                  <span class="meta-item">
+                    <mat-icon class="meta-icon">schedule</mat-icon>
+                    {{ course.hours }} hours
+                  </span>
+                  <span class="meta-item">
+                    <mat-icon class="meta-icon">quiz</mat-icon>
+                    {{ course.numberOfExams }} exams
+                  </span>
                 </div>
-              }
-              <!-- Price and Register Button -->
-              <div class="price-action-container">
-                <div class="price-label">
-                  <span class="price">Price: ${{ course.price }}</span>
+                <p class="card-description">{{ course.description }}</p>
+                <ng-container *ngIf="userCourses() && (course.id | function:coursesService.isUserRegisteredForCourse.bind(coursesService))">
+                  <!-- Registration Status -->
+                  <div class="registration-status">
+                    <mat-icon class="status-icon">check_circle</mat-icon>
+                    <span class="status-text">Registered ({{ course.id | function:coursesService.getRegistrationStatus.bind(coursesService) }})</span>
+                  </div>
+                </ng-container>
+                <!-- Price and Register Button -->
+                <div class="price-action-container">
+                  <div class="price-label">
+                    <span class="price">Price: ${{ course.price }}</span>
+                  </div>
+                  <button 
+                    mat-stroked-button 
+                    color="primary" 
+                    class="register-btn" 
+                    (click)="registerCourse(course)"
+                    [disabled]="isLoading()">
+                    {{ isLoading() ? 'Registering...' : 'Register' }}
+                  </button>
                 </div>
-                <button 
-                  mat-stroked-button 
-                  color="primary" 
-                  class="register-btn" 
-                  (click)="registerCourse(course)"
-                  [disabled]="isLoading()">
-                  {{ isLoading() ? 'Registering...' : 'Register' }}
-                </button>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
-      </div>
-    }
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </ng-template>
+      </ng-template>
+    </ng-template>
   </div>
 
   <!-- CTA Section -->
