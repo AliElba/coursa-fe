@@ -21,8 +21,8 @@
           Try Again
         </button>
       </div>
-    } @else if (userCourses().length === 0) {
-      <!-- Empty State -->
+    } @else if (!isLoading() && userCourses().length === 0) {
+      <!-- Empty State: Only show if backend returns empty array and not loading -->
       <div class="empty-container">
         <mat-icon class="empty-icon">school</mat-icon>
         <h3 class="empty-title">No courses yet</h3>

@@ -32,14 +32,14 @@
           Try Again
         </button>
       </div>
-    } @else if (courses().length === 0) {
-      <!-- Empty State -->
+    } @else if (!isLoading() && courses().length === 0) {
+      <!-- Empty State: Only show if backend returns empty array and not loading -->
       <div class="empty-container">
         <mat-icon class="empty-icon">school</mat-icon>
         <p>No courses available at the moment.</p>
         <p>Please check back later!</p>
       </div>
-    } @else {
+    } else {
       <!-- Courses Grid -->
       <div class="card-grid">
         @for (course of courses(); track course.id) {
@@ -70,22 +70,21 @@
                   <mat-icon class="status-icon">check_circle</mat-icon>
                   <span class="status-text">Registered ({{ course.id | function:coursesService.getRegistrationStatus.bind(coursesService) }})</span>
                 </div>
-              } @else {
-                <!-- Price and Register Button -->
-                <div class="price-action-container">
-                  <div class="price-label">
-                    <span class="price">Price: ${{ course.price }}</span>
-                  </div>
-                  <button 
-                    mat-stroked-button 
-                    color="primary" 
-                    class="register-btn" 
-                    (click)="registerCourse(course)"
-                    [disabled]="isLoading()">
-                    {{ isLoading() ? 'Registering...' : 'Register' }}
-                  </button>
-                </div>
               }
+              <!-- Price and Register Button -->
+              <div class="price-action-container">
+                <div class="price-label">
+                  <span class="price">Price: ${{ course.price }}</span>
+                </div>
+                <button 
+                  mat-stroked-button 
+                  color="primary" 
+                  class="register-btn" 
+                  (click)="registerCourse(course)"
+                  [disabled]="isLoading()">
+                  {{ isLoading() ? 'Registering...' : 'Register' }}
+                </button>
+              </div>
             </mat-card-content>
           </mat-card>
         }
