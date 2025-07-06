@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout.component';
 import { CourseDetailsComponent } from './features/courses/course-details.component';
 import { PaymentSuccessComponent } from './features/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './features/payment-cancel/payment-cancel.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,8 +15,8 @@ export const routes: Routes = [
     children: [
       // Add more private routes here
       { path: '', component: LandingComponent, pathMatch: 'full' },
-      { path: 'my-courses', component: MyCoursesComponent },
-      { path: 'courses/:id', component: CourseDetailsComponent },
+      { path: 'my-courses', component: MyCoursesComponent, canActivate: [AuthGuard] },
+      { path: 'courses/:id', component: CourseDetailsComponent, canActivate: [AuthGuard] },
     ]
   },
   { path: 'login', component: LoginComponent },  
