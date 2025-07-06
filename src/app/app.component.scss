@@ -2,3 +2,37 @@
   display: block;
   min-height: 100vh;
 }
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+.splash-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  transition: opacity 0.3s;
+}
+.splash-spinner {
+  position: relative;
+  z-index: 1;
+  background: white;
+  border-radius: 16px;
+  padding: 32px 48px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fade-in {
+  animation: fadeInApp 0.5s ease;
+}
+@keyframes fadeInApp {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

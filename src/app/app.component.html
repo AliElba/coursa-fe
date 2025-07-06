@@ -1,1 +1,11 @@
-<router-outlet />
+<div class="splash-overlay" *ngIf="!authService.isReady(); else appContent">
+  <div class="splash-backdrop"></div>
+  <div class="splash-spinner">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+</div>
+<ng-template #appContent>
+  <div [ngClass]="{ 'fade-in': authService.isReady() }">
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>

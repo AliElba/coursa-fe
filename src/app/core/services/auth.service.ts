@@ -4,16 +4,21 @@ import { CoursesService } from './courses.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = signal<UserDto | null>(this.getUserFromStorage());
+  user = signal<UserDto | null>(null);
+  isReady = signal(false);
 
-  constructor(private coursesService: CoursesService) {}
+  constructor(private coursesService: CoursesService) {
+    this.restoreUser();
+  }
 
-  private getUserFromStorage(): UserDto | null {
+  private restoreUser() {
     if (typeof window !== 'undefined') {
       const userStr = localStorage.getItem('user');
-      return userStr ? JSON.parse(userStr) as UserDto : null;
+      if (userStr) {
+        this.user.set(JSON.parse(userStr) as UserDto);
+      }
     }
-    return null;
+    this.isReady.set(true);
   }
 
   setUser(user: UserDto) {
