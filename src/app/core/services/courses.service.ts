@@ -31,6 +31,13 @@ export class CoursesService {
   }
 
   /**
+   * Utility function to add a delay (for testing skeleton loader)
+   */
+  private async delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
    * Fetches all available courses from the backend
    * Updates the allCourses signal with the fetched data
    */
@@ -38,7 +45,7 @@ export class CoursesService {
     try {
       this.isLoading.set(true);
       this.error.set(null);
-      
+      // await this.delay(2000); // TEMP: Artificial delay for skeleton loader testing
       const courses = await this.coursesApi.getAllCourses().then(response => response.data);
       this.allCourses.set(courses);
     } catch (err: any) {

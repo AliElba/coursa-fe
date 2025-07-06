@@ -11,6 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { CourseDto, UserCourseDto } from '../../generated/api';
 import { isPlatformBrowser } from '@angular/common';
 import { FunctionPipe } from '../../shared/pipes/function.pipe';
+import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 
 @Component({
   selector: 'app-landing',
@@ -23,7 +24,8 @@ import { FunctionPipe } from '../../shared/pipes/function.pipe';
     MatIconModule, 
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    FunctionPipe
+    FunctionPipe,
+    SkeletonLoaderComponent
   ],
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
@@ -60,15 +62,14 @@ export class LandingComponent implements OnInit, OnDestroy {
     return this.coursesService.userCourses;
   }
 
+  skeletonCount = 4;
+
   /**
    * Initialize component by fetching courses from the API
    */
   async ngOnInit(): Promise<void> {
-    // Only fetch courses in browser environment
     if (isPlatformBrowser(this.platformId)) {
       await this.loadCourses();
-      
-      // Also load user courses if user is logged in to show registration status
       if (this.user()) {
         await this.loadUserCourses();
       }
@@ -79,7 +80,7 @@ export class LandingComponent implements OnInit, OnDestroy {
    * Clean up when component is destroyed
    */
   ngOnDestroy(): void {
-    // No specific cleanup needed for signals
+    // No cleanup needed
   }
 
   /**

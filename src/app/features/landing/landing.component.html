@@ -19,11 +19,10 @@
     <h2 class="section-title">Available Courses</h2>
     
     @if (isLoading()) {
-      <!-- Loading State -->
-      <div class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Loading courses...</p>
-      </div>
+      <!-- Shared Skeleton Loader: always shown immediately when loading -->
+      <app-skeleton-loader
+        [count]="skeletonCount"
+      />
     } @else if (error()) {
       <!-- Error State -->
       <div class="error-container">

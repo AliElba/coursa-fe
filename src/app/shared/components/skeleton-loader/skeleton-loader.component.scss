@@ -1,0 +1,41 @@
+.skeleton-loader-container {
+  width: 100%;
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .long-loading-message {
+    text-align: center;
+    color: #888;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.skeleton-card {
+  background: #f3f3f3;
+  animation: pulse 1.5s infinite;
+  .skeleton-image, .skeleton-title, .skeleton-meta, .skeleton-description {
+    background: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  .skeleton-image { height: 120px; }
+  .skeleton-title { height: 20px; width: 60%; }
+  .skeleton-meta { height: 14px; width: 40%; }
+  .skeleton-description { height: 12px; width: 80%; }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+} 

@@ -61,13 +61,14 @@ export class LoginComponent implements AfterViewInit {
       (window as any).google.accounts.id.initialize({
         client_id: environment.googleClientId,
         callback: this.handleCredentialResponse.bind(this),
+        lang: 'en' // Force English
       });
 
       const buttonElement = document.getElementById('g_id_signin');
       if (buttonElement) {
         google.accounts.id.renderButton(buttonElement, {
           type: 'standard',
-          theme: 'outline',
+          theme: 'filled_blue',
           size: 'large',
           text: 'signin_with',
           shape: 'pill',
