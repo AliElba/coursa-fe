@@ -10,11 +10,15 @@ import { CourseDto } from '../../generated/api';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { VideoModalComponent } from './video-modal.component';
+import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 
 @Component({
   selector: 'app-course-details',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
+  imports: [
+    CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule,
+    SkeletonLoaderComponent
+  ],
   templateUrl: './course-details.component.html',
   styleUrls: ['./course-details.component.scss']
 })

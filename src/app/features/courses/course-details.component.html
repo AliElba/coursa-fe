@@ -20,10 +20,8 @@
       </div>
     </div>
     <ng-container *ngIf="isLoading; else loaded">
-      <div class="loading-state">
-        <mat-spinner diameter="48"></mat-spinner>
-        <p>Loading course details...</p>
-      </div>
+      <!-- Shared Skeleton Loader for Course Details -->
+      <app-skeleton-loader [count]="4" />
     </ng-container>
     <ng-template #loaded>
       <ng-container *ngIf="error; else courseContent">

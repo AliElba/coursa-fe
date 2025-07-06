@@ -10,11 +10,8 @@
   <!-- Main Content -->
   <div class="content-section">
     @if (isLoading()) {
-      <!-- Loading State -->
-      <div class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Loading your courses...</p>
-      </div>
+      <!-- Shared Skeleton Loader for My Courses -->
+      <app-skeleton-loader [count]="4" />
     } @else if (error()) {
       <!-- Error State -->
       <div class="error-container">

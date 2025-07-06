@@ -13,6 +13,7 @@ import { UtilsService } from '../../core/services/utils.service';
 import { UserCourseDto } from '../../generated/api';
 import { isPlatformBrowser } from '@angular/common';
 import { FunctionPipe } from '../../shared/pipes/function.pipe';
+import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 
 /**
  * Component for displaying and managing user's registered courses
@@ -30,7 +31,8 @@ import { FunctionPipe } from '../../shared/pipes/function.pipe';
     MatChipsModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    FunctionPipe
+    FunctionPipe,
+    SkeletonLoaderComponent
   ],
   templateUrl: './my-courses.component.html',
   styleUrls: ['./my-courses.component.scss']

@@ -311,6 +311,15 @@
     display: flex;
     gap: 12px;
 
+    .pay-btn,
+    .start-btn {
+      min-height: 48px;
+      width: 100%;
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+      box-sizing: border-box;
+    }
+
     .pay-btn {
       flex: 1;
       background-color: #ff9800;
