@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Snackbar notification styles for NotificationService
+.snackbar-success {
+  background: #43a047 !important; // Green
+  color: #fff !important;
+}
+.snackbar-error {
+  background: #d32f2f !important; // Red
+  color: #fff !important;
+}
+.snackbar-info {
+  background: #1976d2 !important; // Blue
+  color: #fff !important;
+}

@@ -12,6 +12,7 @@ import { CourseDto, UserCourseDto } from '../../generated/api';
 import { isPlatformBrowser } from '@angular/common';
 import { FunctionPipe } from '../../shared/pipes/function.pipe';
 import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import { NotificationService } from '../../shared/services/notification.service';
 
 @Component({
   selector: 'app-landing',
@@ -38,7 +39,8 @@ export class LandingComponent implements OnInit, OnDestroy {
     private router: Router,
     public coursesService: CoursesService,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private notification: NotificationService // Inject NotificationService
   ) {}
 
   // Expose signals from the service for template binding using getters
@@ -91,11 +93,7 @@ export class LandingComponent implements OnInit, OnDestroy {
       await this.coursesService.fetchAllCourses();
     } catch (error) {
       console.error('Failed to load courses:', error);
-      this.snackBar.open('Failed to load courses. Please try again later.', 'Close', {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
+      this.notification.error('Failed to load courses. Please try again later.');
     }
   }
 
@@ -110,19 +108,11 @@ export class LandingComponent implements OnInit, OnDestroy {
       if (error.status === 401) {
         // Log out the user and show a user-friendly message
         this.authService.logout();
-        this.snackBar.open('Your session has expired. You may need to log in again to access your courses.', 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        });
+        this.notification.info('Your session has expired. You may need to log in again to access your courses.');
         // Do not redirect to login, just show public content
       } else {
         // Handle other errors as needed
-        this.snackBar.open('Failed to load your courses. Please try again later.', 'Close', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        });
+        this.notification.error('Failed to load your courses. Please try again later.');
       }
     }
   }
@@ -157,47 +147,24 @@ export class LandingComponent implements OnInit, OnDestroy {
       const existingRegistration = this.coursesService.isUserRegisteredForCourse(course.id);
       
       if (existingRegistration) {
-        this.snackBar.open('You are already registered for this course!', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        });
+        this.notification.info('You are already registered for this course!');
         return;
       }
 
       // Register for the course
       await this.coursesService.registerForCourse(course.id);
       
-      this.snackBar.open(`Successfully registered for ${course.title}!`, 'Close', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
+      this.notification.success(`Successfully registered for ${course.title}!`);
 
       // Navigate to my courses page to see the new registration
       this.router.navigate(['/my-courses']);
     } catch (error: any) {
       console.error('Error registering for course:', error);
-      this.snackBar.open(
-        error.message || 'Failed to register for course. Please try again.', 
-        'Close', 
-        {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        }
-      );
+      this.notification.error(error.message || 'Failed to register for course. Please try again.');
     }
   }
 
-  /**
-   * Handles image loading errors by setting a fallback image
-   * @param event - The error event from the img element
-   */
-  onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    img.src = 'assets/graduation-hat.png'; // Fallback image
-  }
+  // Use UtilsService.onImageError in template for image error handling
 
   /**
    * trackBy function for courses ngFor for better performance

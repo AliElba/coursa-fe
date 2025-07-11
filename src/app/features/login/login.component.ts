@@ -13,6 +13,7 @@ import { AuthApi, GoogleLoginDto } from '../../generated/api';
 import { ApiConfigService } from '../../core/services/api-config.service';
 import { AuthService } from '../../core/services/auth.service';
 import { CoursesService } from '../../core/services/courses.service';
+import { NotificationService } from '../../shared/services/notification.service';
 
 declare const google: any;
 interface CredentialResponse {
@@ -48,7 +49,8 @@ export class LoginComponent implements AfterViewInit {
     private apiConfig: ApiConfigService,
     private authService: AuthService,
     private coursesService: CoursesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private notification: NotificationService // Inject NotificationService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -115,11 +117,7 @@ export class LoginComponent implements AfterViewInit {
       this.router.navigate(['/']);
     } catch (error) {
       console.error('Error handling credential response:', error);
-      this.snackBar.open('Login failed. Please try again.', 'Close', {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
+      this.notification.error('Login failed. Please try again.');
     }
   }
 
@@ -140,25 +138,13 @@ export class LoginComponent implements AfterViewInit {
         localStorage.removeItem('pendingRegistration');
         
         // Show success message
-        this.snackBar.open('Successfully registered for the course!', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        });
+        this.notification.success('Successfully registered for the course!');
         
         // Navigate to my courses to show the new registration
         this.router.navigate(['/my-courses']);
       } catch (error: any) {
         console.error('Error registering for pending course:', error);
-        this.snackBar.open(
-          'Failed to register for the course. You can try again from the courses page.', 
-          'Close', 
-          {
-            duration: 5000,
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom'
-          }
-        );
+        this.notification.error('Failed to register for the course. You can try again from the courses page.');
         
         // Clear the pending registration even if it failed
         localStorage.removeItem('pendingRegistration');

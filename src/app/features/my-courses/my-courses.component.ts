@@ -14,6 +14,7 @@ import { UserCourseDto } from '../../generated/api';
 import { isPlatformBrowser } from '@angular/common';
 import { FunctionPipe } from '../../shared/pipes/function.pipe';
 import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
+import { NotificationService } from '../../shared/services/notification.service';
 
 /**
  * Component for displaying and managing user's registered courses
@@ -44,7 +45,8 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
     private coursesService: CoursesService,
     private authService: AuthService,
     public utilsService: UtilsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private notification: NotificationService // Inject NotificationService
   ) {}
 
   // Expose signals from the service for template binding using getters
@@ -97,11 +99,7 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
       await this.coursesService.fetchUserCourses();
     } catch (error) {
       console.error('Failed to load user courses:', error);
-      this.snackBar.open('Failed to load your courses. Please try again later.', 'Close', {
-        duration: 5000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
+      this.notification.error('Failed to load your courses. Please try again later.');
     }
   }
 
@@ -113,22 +111,10 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
     try {
       await this.coursesService.activateCourse(userCourse.id);
       
-      this.snackBar.open(`Successfully activated ${userCourse.course.title}!`, 'Close', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom'
-      });
+      this.notification.success(`Successfully activated ${userCourse.course.title}!`);
     } catch (error: any) {
       console.error('Error activating course:', error);
-      this.snackBar.open(
-        error.message || 'Failed to activate course. Please try again.', 
-        'Close', 
-        {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom'
-        }
-      );
+      this.notification.error(error.message || 'Failed to activate course. Please try again.');
     }
   }
 
@@ -150,19 +136,8 @@ export class MyCoursesComponent implements OnInit, OnDestroy {
     console.log('Starting course:', userCourse.course.title);
     
     // For now, show a message to the user
-    this.snackBar.open(
-      `Starting course: ${userCourse.course.title}`,
-      'Close',
-      { duration: 3000 }
-    );
+    this.notification.info(`Starting course: ${userCourse.course.title}`);
   }
 
-  /**
-   * Handle image loading errors
-   * @param event - The error event
-   */
-  onImageError(event: Event): void {
-    const img = event.target as HTMLImageElement;
-    img.src = 'assets/graduation-hat.png'; // Fallback image
-  }
+  // Use UtilsService.onImageError in template for image error handling
 } 
