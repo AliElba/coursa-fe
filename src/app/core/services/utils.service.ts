@@ -74,4 +74,15 @@ export class UtilsService {
   generateId(length: number = 8): string {
     return Math.random().toString(36).substring(2, length + 2);
   }
+
+  /**
+   * Static handler for image load errors. Sets a fallback image.
+   * Usage: <img (error)="utilsService.onImageError($event)">
+   * @param event - The error event from the img element
+   * @param fallback - The fallback image path (default: 'assets/graduation-hat.png')
+   */
+  static onImageError(event: Event, fallback: string = 'assets/graduation-hat.png'): void {
+    const img = event.target as HTMLImageElement;
+    img.src = fallback;
+  }
 } 
