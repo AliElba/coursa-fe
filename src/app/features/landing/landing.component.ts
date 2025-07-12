@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FunctionPipe } from '../../shared/pipes/function.pipe';
 import { SkeletonLoaderComponent } from '../../shared/components/skeleton-loader/skeleton-loader.component';
 import { NotificationService } from '../../shared/services/notification.service';
+import { UtilsService } from '../../core/services/utils.service';
 
 @Component({
   selector: 'app-landing',
@@ -32,6 +33,7 @@ import { NotificationService } from '../../shared/services/notification.service'
   styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent implements OnInit, OnDestroy {
+  onImageError = UtilsService.onImageError;
   @ViewChild('coursesSection') coursesSection!: ElementRef<HTMLElement>;
 
   constructor(
@@ -40,7 +42,7 @@ export class LandingComponent implements OnInit, OnDestroy {
     public coursesService: CoursesService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private notification: NotificationService // Inject NotificationService
+    private notification: NotificationService
   ) {}
 
   // Expose signals from the service for template binding using getters
@@ -163,8 +165,6 @@ export class LandingComponent implements OnInit, OnDestroy {
       this.notification.error(error.message || 'Failed to register for course. Please try again.');
     }
   }
-
-  // Use UtilsService.onImageError in template for image error handling
 
   /**
    * trackBy function for courses ngFor for better performance

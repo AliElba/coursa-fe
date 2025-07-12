@@ -81,7 +81,7 @@ export class UtilsService {
    * @param event - The error event from the img element
    * @param fallback - The fallback image path (default: 'assets/graduation-hat.png')
    */
-  static onImageError(event: Event, fallback: string = 'assets/graduation-hat.png'): void {
+  public static onImageError(event: Event, fallback: string = 'assets/graduation-hat.png'): void {
     const img = event.target as HTMLImageElement;
     img.src = fallback;
   }

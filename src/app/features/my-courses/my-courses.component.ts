@@ -39,12 +39,14 @@ import { NotificationService } from '../../shared/services/notification.service'
   styleUrls: ['./my-courses.component.scss']
 })
 export class MyCoursesComponent implements OnInit, OnDestroy {
+  onImageError = UtilsService.onImageError;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
     private coursesService: CoursesService,
     private authService: AuthService,
-    public utilsService: UtilsService,
+    public utilsService: UtilsService, // Injected for template use
     private snackBar: MatSnackBar,
     private notification: NotificationService // Inject NotificationService
   ) {}
