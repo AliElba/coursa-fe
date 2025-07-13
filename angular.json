@@ -87,6 +87,27 @@
               ],
               "outputHashing": "all"
             },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.stage.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1MB",
+                  "maximumError": "2MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -100,6 +121,9 @@
           "configurations": {
             "production": {
               "buildTarget": "coursa-fe:build:production"
+            },
+            "staging": {
+              "buildTarget": "coursa-fe:build:staging"
             },
             "development": {
               "buildTarget": "coursa-fe:build:development",

@@ -36,6 +36,26 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+### Environment-Specific Builds
+
+You can build for different environments:
+
+```bash
+# Development build (default)
+ng build
+
+# Production build
+ng build --configuration=production
+
+# Staging build
+ng build --configuration=staging
+```
+
+Each environment uses different configuration files:
+- **Development**: `src/environments/environment.ts`
+- **Production**: `src/environments/environment.prod.ts`
+- **Staging**: `src/environments/environment.stage.ts`
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
