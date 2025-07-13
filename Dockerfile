@@ -8,21 +8,26 @@ WORKDIR /app
 # Copy package.json and package-lock.json for dependency installation
 COPY package*.json ./
 
-# Install dependencies
+# Install dependencies (including devDependencies needed for Angular build tools)
 RUN npm install --production=false
 
 # Copy the rest of the application code
 COPY . .
 
-# Build the Angular app for production
-RUN npm run build -- --configuration production
+# Build the Angular app for production and show output
+RUN npm run build -- --configuration production \
+  && echo "=== Angular build output ===" \
+  && ls -l dist/coursa-fe/browser
 
 # ----------- Stage 2: Serve the app with NGINX -----------
 # Use an official NGINX image to serve the built files
 FROM nginx:alpine
 
-# Copy the built Angular app from the builder stage to the NGINX html directory
-COPY --from=builder /app/dist/coursa-fe /usr/share/nginx/html
+# Copy the built Angular app from the builder stage to the NGINX html directory (SSR/prerendered output)
+COPY --from=builder /app/dist/coursa-fe/browser /usr/share/nginx/html
+
+# Debug: List files in the NGINX html directory
+RUN echo "=== NGINX html directory ===" && ls -l /usr/share/nginx/html
 
 # Copy a custom NGINX config (optional, for SPA routing)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -37,4 +42,4 @@ CMD ["nginx", "-g", "daemon off;"]
 # Notes:
 # - This Dockerfile uses multi-stage builds for a small, secure final image.
 # - The Angular app is built in a Node.js container, then served by NGINX.
-# - You can customize nginx.conf for SPA routing (see below). 
+# - For SSR/prerender, static files are in dist/coursa-fe/browser. 

@@ -57,3 +57,87 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Running the Angular Frontend Locally with Docker
+
+You can build and run this Angular app locally using Docker to test your production Dockerfile and NGINX setup before deploying to the cloud.
+
+### 1. Build the Docker Image
+
+Open a terminal in the `coursa-fe` directory and run:
+
+```bash
+docker build -t coursa-fe:local .
+```
+
+This will build the Docker image using your Dockerfile and tag it as `coursa-fe:local`.
+
+### 2. Run the Docker Container
+
+```bash
+docker run --rm -p 8080:80 coursa-fe:local
+```
+
+This starts a container from your image and maps port 80 in the container to port 8080 on your machine.
+
+### 3. Test in Your Browser
+
+Open your browser and go to:
+
+[http://localhost:8080](http://localhost:8080)
+
+You should see your Angular app running as it would in production.
+
+### 4. Troubleshooting
+
+- If you see a blank page or errors, check the container logs:
+  ```bash
+  docker logs <container_id>
+  ```
+- Make sure your `nginx.conf` is present and correct.
+- If you make changes, rebuild the image and re-run the container.
+
+---
+
+**This is the best way to verify your Dockerfile and NGINX config before deploying to any cloud!**
+
+## Building and Running the Docker Container in Detached Mode
+
+To build and run your Angular frontend in Docker, follow these steps:
+
+### 1. Build the Docker Image
+
+Open a terminal in the `coursa-fe` directory and run:
+
+```bash
+docker build -t coursa-fe .
+```
+
+This will build the Docker image using your Dockerfile and tag it as `coursa-fe`.
+
+### 2. Run the Docker Container in Detached Mode
+
+To run the container in the background (so your terminal is not blocked), use the `-d` (detached) flag and assign a name to your container:
+
+```bash
+docker run -d --name coursa-fe -p 8080:80 coursa-fe
+```
+
+- `-d` runs the container in detached mode (in the background).
+- `--name coursa-fe` gives your container a recognizable name.
+- `-p 8080:80` maps port 80 in the container to port 8080 on your machine.
+- `coursa-fe` is the image name (replace with your tag if different).
+
+You can then view logs with:
+
+```bash
+docker logs -f coursa-fe
+```
+
+And stop the container with:
+
+```bash
+docker stop coursa-fe
+```
+
+---
