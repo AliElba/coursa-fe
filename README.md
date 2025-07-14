@@ -161,3 +161,27 @@ docker stop coursa-fe
 ```
 
 ---
+
+## Publishing Changes from main to stage and prod
+
+To promote your latest changes through the release branches, use the following steps:
+
+1. **Merge main into stage and push:**
+   ```sh
+   git checkout stage && git merge main && git push
+   ```
+2. **Merge stage into prod and push:**
+   ```sh
+   git checkout prod && git merge stage && git push
+   ```
+3. **Switch back to main for further development:**
+   ```sh
+   git checkout main
+   ```
+
+**Summary:**
+- Always merge `main` → `stage` → `prod` in order.
+- Push after each merge to update the remote branch.
+- Switch back to `main` when done to continue development.
+
+---
