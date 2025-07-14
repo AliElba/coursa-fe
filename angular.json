@@ -69,6 +69,12 @@
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.prod.ts"
               }
+            ],
+            "allowedCommonJsDependencies": [
+              "axios",
+              "form-data",
+              "proxy-from-env",
+              "follow-redirects"
             ]
           },
           "configurations": {
@@ -85,7 +91,8 @@
                   "maximumError": "16kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json"
             },
             "staging": {
               "fileReplacements": [
